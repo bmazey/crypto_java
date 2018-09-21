@@ -1,4 +1,4 @@
-package com.decrypt;
+package main.java.org.nyu.decrypt;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import com.precomputed.ComputeKeys;
+import main.java.org.nyu.precomputed.ComputeKeys;
 
 public class Decrypt {
 	

@@ -1,4 +1,4 @@
-package com.precomputed;
+package main.java.org.nyu.precomputed;
 
 import java.io.BufferedReader;
 import java.io.File;

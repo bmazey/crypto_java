@@ -1,16 +1,15 @@
-package com.junits;
+package main;
 
 import java.util.Scanner;
 
-import org.junit.Test;
+import main.java.org.nyu.decrypt.Decrypt;
+import main.java.org.nyu.encrypt.Encrypt;
 
-import com.encrypt.Encrypt;
+public class Main {
 
-public class EncryptJunit {
+	public static void main(String[] args) {
 
-	@Test
-	public void encryptmessage() {
-		
+		//System.out.print("Enter cipher text(every letter has to be keyed in comma-separated):");
 		System.out.println("Enter the message");
 		Scanner sc = new Scanner(System.in);
 		String message = sc.nextLine();
@@ -21,8 +20,6 @@ public class EncryptJunit {
 		Encrypt encrypt = new Encrypt(message);
 		String ciphertext = encrypt.getEncryptedMessage();
 		System.out.println("The cipher text is :"+ciphertext);
-	
+		Decrypt decrypt = new Decrypt(ciphertext);
 	}
-	
-	
 }

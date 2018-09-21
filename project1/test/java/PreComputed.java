@@ -1,8 +1,8 @@
-package com.junits;
+package java;
 
 import org.junit.Test;
 
-import com.precomputed.ComputeKeys;
+import main.java.org.nyu.precomputed.ComputeKeys;
 
 public class PreComputed {
 	
