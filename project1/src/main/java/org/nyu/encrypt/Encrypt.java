@@ -1,9 +1,10 @@
 package org.nyu.encrypt;
 
+import org.nyu.precomputed.ComputeKeys;
+
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import main.java.org.nyu.precomputed.ComputeKeys;
 
 public class Encrypt {
 	

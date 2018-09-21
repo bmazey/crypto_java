@@ -1,5 +1,7 @@
 package org.nyu.decrypt;
 
+import org.nyu.precomputed.ComputeKeys;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,7 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import main.java.org.nyu.precomputed.ComputeKeys;
 
 public class Decrypt {
 	
