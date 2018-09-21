@@ -1,5 +1,3 @@
-package java;
-
 import org.junit.Test;
 
 import main.java.org.nyu.precomputed.ComputeKeys;

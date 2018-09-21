@@ -1,4 +1,4 @@
-package main.java.org.nyu.decrypt;
+package org.nyu.decrypt;
 
 import java.io.BufferedReader;
 import java.io.File;

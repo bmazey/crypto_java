@@ -1,4 +1,4 @@
-package main.java.org.nyu.encrypt;
+package org.nyu.encrypt;
 
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
