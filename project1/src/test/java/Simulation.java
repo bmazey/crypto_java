@@ -8,6 +8,8 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Simulation {
 
@@ -25,13 +27,16 @@ public class Simulation {
 
         // let us begin by defining a keyspace and randomly generating a key based on the letter frequency.
         // we will use a Spring class to pulls files from the resources folder, which automatically added to classpath
-        File frequency = new ClassPathResource("frequency.json").getFile();
-        File dictionary = new ClassPathResource("dictionary.json").getFile();
+        File frequencyFile = new ClassPathResource("frequency.json").getFile();
+        File dictionaryFile = new ClassPathResource("dictionary.json").getFile();
 
         // now let's use our object mappers to convert these JSON files into POJOs
         ObjectMapper objectMapper = new ObjectMapper();
-        Frequency frequencyMap = objectMapper.readValue(frequency, Frequency.class);
-        Dictionary dictionaryMap = objectMapper.readValue(dictionary, Dictionary.class);
+        Frequency frequency = objectMapper.readValue(frequencyFile, Frequency.class);
+        Dictionary dictionary = objectMapper.readValue(dictionaryFile, Dictionary.class);
+
+        @SuppressWarnings("unchecked")
+        HashMap<String, Integer> frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
 
 
     }
