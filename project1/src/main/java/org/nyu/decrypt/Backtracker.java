@@ -10,11 +10,15 @@ import java.io.IOException;
 
 public class Backtracker {
 
-    public Dictionary dictionary;
-    public Frequency frequency;
+    private Dictionary dictionary;
+    private Frequency frequency;
+    private String ciphertext;
 
     //TODO - implement backtracking!
-    public Backtracker() throws IOException {
+    public Backtracker(String ciphertext) throws IOException {
+
+        this.ciphertext = ciphertext;
+
         File frequencyFile = new ClassPathResource("frequency.json").getFile();
         File dictionaryFile = new ClassPathResource("dictionary.json").getFile();
 
@@ -25,7 +29,7 @@ public class Backtracker {
     }
 
 
-    public void backtrack(String ciphertext) {
+    public void backtrack() {
 
 
     }
