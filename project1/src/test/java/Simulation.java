@@ -6,7 +6,11 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Simulation {
 
@@ -16,7 +20,7 @@ public class Simulation {
     public void simulate() throws IOException {
 
         /**
-         * This test is designed to simluate how project 1 will be executed via key generation and scheduling.
+         * This test is designed to simulate how project 1 will be executed via key generation and scheduling.
          * We will use this test as a benchmark to compare the results of our decryption attacks to a known I/O
          *
          * b.mazey@nyu.edu
@@ -39,6 +43,10 @@ public class Simulation {
     }
 
     public void generateKey() {
+        int[] primitiveKeySet = IntStream.rangeClosed(1, KEYSPACE).toArray();
+
+        // let's convert that to an ArrayList ...
+        List<Integer> KeySet = Arrays.stream(primitiveKeySet).boxed().collect(Collectors.toList());
 
     }
 }
