@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class Simulation {
 
+    final int KEYSPACE = 105;
+
     @Test
     public void simulate() throws IOException {
 
@@ -18,7 +20,10 @@ public class Simulation {
 
         // let us begin by defining a keyspace and randomly generating a key based on the letter frequency.
         // we will use a Spring class to pulls files from the resources folder, which automatically added to classpath
-        File frequency = new ClassPathResource("frequency.txt").getFile();
+        File frequency = new ClassPathResource("frequency.json").getFile();
+        File dictionary = new ClassPathResource("dictionary.json").getFile();
+
+        // now let's use our object mappers to convert these JSON files into POJOs
 
 
     }
