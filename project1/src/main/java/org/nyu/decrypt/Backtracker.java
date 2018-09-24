@@ -7,7 +7,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Backtracker {
@@ -16,8 +16,9 @@ public class Backtracker {
     private Frequency frequency;
     private String ciphertext;
     private Random random;
+    private HashMap<String, Integer> frequencyMap;
 
-    //TODO - implement backtracking!
+    @SuppressWarnings("unchecked")
     public Backtracker(String ciphertext) throws IOException {
 
         this.ciphertext = ciphertext;
@@ -30,12 +31,16 @@ public class Backtracker {
         this.dictionary = objectMapper.readValue(dictionaryFile, Dictionary.class);
         this.frequency = objectMapper.readValue(frequencyFile, Frequency.class);
 
+        frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
+
     }
 
 
     public void backtrack() {
 
         // TODO - implement ... previous made no sense!
+
+
 
     }
 }
