@@ -4,4 +4,8 @@ public class Backtracker {
 
     //TODO - implement backtracking!
 
+    public void backtrack() {
+
+    }
+
 }
