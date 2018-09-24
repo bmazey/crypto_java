@@ -1,8 +1,13 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.nyu.dto.Dictionary;
+import org.nyu.dto.Frequency;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Simulation {
 
@@ -24,6 +29,9 @@ public class Simulation {
         File dictionary = new ClassPathResource("dictionary.json").getFile();
 
         // now let's use our object mappers to convert these JSON files into POJOs
+        ObjectMapper objectMapper = new ObjectMapper();
+        Frequency frequencyMap = objectMapper.readValue(frequency, Frequency.class);
+        Dictionary dictionaryMap = objectMapper.readValue(dictionary, Dictionary.class);
 
 
     }
