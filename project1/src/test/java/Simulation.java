@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.nyu.dto.Dictionary;
 import org.nyu.dto.Frequency;
@@ -7,9 +6,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Simulation {
 
@@ -26,7 +23,8 @@ public class Simulation {
          */
 
         // let us begin by defining a keyspace and randomly generating a key based on the letter frequency.
-        // we will use a Spring class to pulls files from the resources folder, which automatically added to classpath
+        // we will use a Spring class to pull files from the resources folder, which are automatically added
+        // to classpath
         File frequencyFile = new ClassPathResource("frequency.json").getFile();
         File dictionaryFile = new ClassPathResource("dictionary.json").getFile();
 
@@ -38,6 +36,9 @@ public class Simulation {
         @SuppressWarnings("unchecked")
         HashMap<String, Integer> frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
 
+    }
+
+    public void generateKey() {
 
     }
 }
