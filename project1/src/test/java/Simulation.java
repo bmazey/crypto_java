@@ -90,4 +90,23 @@ public class Simulation {
         return result;
 
     }
+
+    public String decrypt(HashMap<String, ArrayList<Integer>> map, int[] ciphertext) {
+        String plaintext = "";
+
+        for(int i = 0; i < ciphertext.length; i++) {
+
+            for(String key : map.keySet()) {
+                ArrayList values = map.get(key);
+                if (values.contains(ciphertext[i])) {
+
+                    //This is bad - don't concat strings this way!
+                    if (key.equals("space")) plaintext += " ";
+                    else plaintext += key;
+                }
+            }
+        }
+
+        return plaintext;
+    }
 }
