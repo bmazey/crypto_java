@@ -56,6 +56,16 @@ public class Simulation {
             System.out.println(key + " : " + keyMap.get(key));
         }
 
+        String sample = "stovepipes jeopardous gibbousness hope";
+
+        int[] ciphertext = encrypt(keyMap, sample);
+
+        for(int i = 0; i < ciphertext.length; i++){
+
+            System.out.println(ciphertext[i] + " ");
+        }
+
+
 
     }
 
@@ -86,27 +96,35 @@ public class Simulation {
             }
         }
 
+
         //TODO - continue ...
         return result;
 
     }
 
-    public String decrypt(HashMap<String, ArrayList<Integer>> map, int[] ciphertext) {
-        String plaintext = "";
 
-        for(int i = 0; i < ciphertext.length; i++) {
+    public int[] encrypt(HashMap<String, ArrayList<Integer>> keyMap, String plaintext){
 
-            for(String key : map.keySet()) {
-                ArrayList values = map.get(key);
-                if (values.contains(ciphertext[i])) {
+       int[] ciphertextArray = new int[plaintext.length()];
 
-                    //This is bad - don't concat strings this way!
-                    if (key.equals("space")) plaintext += " ";
-                    else plaintext += key;
-                }
-            }
-        }
 
-        return plaintext;
+       Random r = new Random();
+
+       for(int i = 0; i < plaintext.length(); i++) {
+
+           if (plaintext.charAt(i) == ' ') {
+               ArrayList<Integer> temp = keyMap.get("space");
+               int cipher = temp.get(r.nextInt(temp.size()));
+               ciphertextArray[i] = cipher;
+               continue;
+           }
+           ArrayList<Integer> temp = keyMap.get(Character.toString(plaintext.charAt(i)));
+           int cipher = temp.get(r.nextInt(temp.size()));
+           ciphertextArray[i] = cipher;
+
+       }
+
+       return ciphertextArray;
+
     }
 }
