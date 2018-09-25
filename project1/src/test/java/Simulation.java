@@ -40,10 +40,13 @@ public class Simulation {
         @SuppressWarnings("unchecked")
         HashMap<String, Integer> frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
 
+
+        System.out.println(frequencyMap.get("a"));
+
     }
 
     public void generateKey() {
-        int[] primitiveKeySet = IntStream.rangeClosed(1, KEYSPACE).toArray();
+        int[] primitiveKeySet = IntStream.rangeClosed(0, KEYSPACE).toArray();
 
         // let's convert that to an ArrayList ...
         List<Integer> KeySet = Arrays.stream(primitiveKeySet).boxed().collect(Collectors.toList());
