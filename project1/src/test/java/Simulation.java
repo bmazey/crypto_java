@@ -56,14 +56,13 @@ public class Simulation {
             System.out.println(key + " : " + keyMap.get(key));
         }
 
+        // Now the fun begins! Replace sample text!
         String sample = "stovepipes jeopardous gibbousness hope";
 
         int[] ciphertext = encrypt(keyMap, sample);
 
-        for(int i = 0; i < ciphertext.length; i++){
-
-            System.out.println(ciphertext[i] + " ");
-        }
+        // Looks great!
+        assert sample.equals(decrypt(keyMap, ciphertext));
 
 
 
