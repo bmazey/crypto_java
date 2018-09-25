@@ -6,15 +6,16 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.toSet;
+
 public class Simulation {
 
-    final int KEYSPACE = 105;
+    // this is set to 106 because Random.nextInt(inclusive, exclusive) ...
+    final int KEYSPACE = 106;
 
     @Test
     public void simulate() throws IOException {
@@ -43,15 +44,50 @@ public class Simulation {
 
         System.out.println(frequencyMap.get("a"));
 
+         int sum = 0;
+        for (String key : frequencyMap.keySet()) {
+            sum = sum + frequencyMap.get(key);
+        }
+        System.out.println("Sum: " + sum);
+
+        HashMap<String, ArrayList<Integer>> keyMap = generateKey(frequencyMap);
+
+        for (String key : keyMap.keySet()) {
+            System.out.println(key + " : " + keyMap.get(key));
+        }
+
+
     }
 
-    public void generateKey() {
-        int[] primitiveKeySet = IntStream.rangeClosed(0, KEYSPACE).toArray();
+    public HashMap<String, ArrayList<Integer>> generateKey(HashMap<String, Integer> map) {
 
-        // let's convert that to an ArrayList ...
-        List<Integer> KeySet = Arrays.stream(primitiveKeySet).boxed().collect(Collectors.toList());
+        Random r = new Random();
+
+        ArrayList<Integer> numbers = new ArrayList<>(IntStream.range(0, KEYSPACE).boxed().collect(toSet()));
+
+        HashMap<String, ArrayList<Integer>> result = new HashMap<>();
+
+        // this is dumb - clean this up later ...
+        for (String key : map.keySet()) {
+            result.put(key, new ArrayList<>());
+        }
+
+        for (String key : map.keySet()){
+            for (int i = 0; i < map.get(key); i++) {
+                System.out.println("size: " + numbers.size());
+                Integer number = numbers.get(r.nextInt(numbers.size()));
+                ArrayList keylist = result.get(key);
+                keylist.add(number);
+                result.put(key, keylist);
+
+                // remove the number because we've used it ...
+                numbers.remove(number);
+
+            }
+        }
 
         //TODO - continue ...
+        return result;
 
     }
 }

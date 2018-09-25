@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class Backtracker {
@@ -38,9 +39,21 @@ public class Backtracker {
 
     public void backtrack() {
 
+        HashMap<String, List<Integer>> conjectureMap = new HashMap<>();
+
         // TODO - implement ... previous made no sense!
+        for (String word : dictionary.getWords()) {
 
+        }
 
+    }
 
+    // first map is original frequency map, second is conjecture map
+    public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, List<Integer>> map2) {
+        for (String key : map1.keySet()) {
+            if (map2.get(key).size() > map1.get(key))
+                return false;
+        }
+        return true;
     }
 }
