@@ -34,6 +34,8 @@ public class Simulation {
         File frequencyFile = new ClassPathResource("frequency.json").getFile();
         File dictionaryFile = new ClassPathResource("dictionary.json").getFile();
 
+        // TODO - MARSHALL CANDIDATES MAP FOR FIRST ARG IN PROBLEM1 METHOD!
+
         // now let's use our object mappers to convert these JSON files into POJOs
         ObjectMapper objectMapper = new ObjectMapper();
         Frequency frequency = objectMapper.readValue(frequencyFile, Frequency.class);
@@ -70,7 +72,8 @@ public class Simulation {
 
         int[] candidate_ciphertext = encrypt(keyMap, candidate);
 
-        assert candidate.equals(problem1(candidate_ciphertext));
+        // TODO - See above!
+        // assert candidate.equals(problem1(candidate_ciphertext));
 
 
 
@@ -156,16 +159,29 @@ public class Simulation {
 //
 //    }
 
-    public String problem1(int[] ciphertext) {
+    public String problem1(ArrayList<String> Candidates, HashMap<String, Integer> frequency, int[] ciphertext) {
         // obviously we don't have the key ... but we do have our nice frequency map, and we might be able to build
         // a matching one!
 
-        String plaintext = "";
+        String plaintext = "Nothing!";
+        HashMap<String, ArrayList<Integer>> result = new HashMap<>();
 
-        // run through the plaintexts and build a new potential key as a hashmap, checking against frequencyMap.
-        for (int i = 0; i < ciphertext.length; i ++) {
-
+        // this is dumb - clean this up later ...
+        // need to copy keys over
+        for (String s : frequency.keySet()) {
+            result.put(s, new ArrayList<>());
         }
+
+      for (String candidate : Candidates) {
+          for (int i = 0; i < candidate.length(); i++) {
+              ArrayList list = result.get(Character.toString(candidate.charAt(i)));
+              list.add(ciphertext[i]);
+
+              if (list.size() > frequency.get(Character.toString(candidate.charAt(i))))
+                  break;
+          }
+          plaintext = candidate;
+      }
 
 
         return plaintext;
