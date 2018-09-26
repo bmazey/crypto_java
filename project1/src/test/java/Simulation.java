@@ -17,6 +17,7 @@ public class Simulation {
     // this is set to 106 because Random.nextInt(inclusive, exclusive) ...
     final int KEYSPACE = 106;
 
+
     @Test
     public void simulate() throws IOException {
 
@@ -41,14 +42,7 @@ public class Simulation {
         @SuppressWarnings("unchecked")
         HashMap<String, Integer> frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
 
-
         System.out.println(frequencyMap.get("a"));
-
-         int sum = 0;
-        for (String key : frequencyMap.keySet()) {
-            sum = sum + frequencyMap.get(key);
-        }
-        System.out.println("Sum: " + sum);
 
         HashMap<String, ArrayList<Integer>> keyMap = generateKey(frequencyMap);
 
@@ -61,8 +55,22 @@ public class Simulation {
 
         int[] ciphertext = encrypt(keyMap, sample);
 
+
         // Looks great!
         assert sample.equals(decrypt(keyMap, ciphertext));
+
+
+        // Let's try something harder ...
+        String candidate = "\"trawling responsiveness tastiest pulsed restamps telescoping pneuma lampoonist divas " +
+                "theosophists pustules checkrowed compactor conditionals envy hairball footslogs wasteful conjures " +
+                "deadfall stagnantly procure barked balmier bowery vagary beaten capitalized undersized towpath " +
+                "envisages thermoplastic rationalizers professions workbench underarm trudger icicled incisive " +
+                "oilbirds citrins chambrays ungainliness weazands prehardened dims determinants fishskin cleanable " +
+                "henceforward misarranges fine\"";
+
+        int[] candidate_ciphertext = encrypt(keyMap, candidate);
+
+        assert candidate.equals(problem1(candidate_ciphertext));
 
 
 
@@ -95,8 +103,6 @@ public class Simulation {
             }
         }
 
-
-        //TODO - continue ...
         return result;
 
     }
@@ -142,6 +148,25 @@ public class Simulation {
                 }
             }
         }
+
+        return plaintext;
+    }
+
+//    public String getCandidate() {
+//
+//    }
+
+    public String problem1(int[] ciphertext) {
+        // obviously we don't have the key ... but we do have our nice frequency map, and we might be able to build
+        // a matching one!
+
+        String plaintext = "";
+
+        // run through the plaintexts and build a new potential key as a hashmap, checking against frequencyMap.
+        for (int i = 0; i < ciphertext.length; i ++) {
+
+        }
+
 
         return plaintext;
     }
