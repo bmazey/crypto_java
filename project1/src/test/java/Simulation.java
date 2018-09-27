@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.nyu.dto.Candidates;
 import org.nyu.dto.Dictionary;
 import org.nyu.dto.Frequency;
 import org.springframework.core.io.ClassPathResource;
@@ -33,13 +34,14 @@ public class Simulation {
         // to classpath
         File frequencyFile = new ClassPathResource("frequency.json").getFile();
         File dictionaryFile = new ClassPathResource("dictionary.json").getFile();
-
-        // TODO - MARSHALL CANDIDATES MAP FOR FIRST ARG IN PROBLEM1 METHOD!
+        File candidateFile = new ClassPathResource("candidates.json").getFile();
 
         // now let's use our object mappers to convert these JSON files into POJOs
         ObjectMapper objectMapper = new ObjectMapper();
         Frequency frequency = objectMapper.readValue(frequencyFile, Frequency.class);
         Dictionary dictionary = objectMapper.readValue(dictionaryFile, Dictionary.class);
+        Candidates candidates = objectMapper.readValue(candidateFile, Candidates.class);
+
 
         @SuppressWarnings("unchecked")
         HashMap<String, Integer> frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
@@ -63,17 +65,20 @@ public class Simulation {
 
 
         // Let's try something harder ...
-        String candidate = "\"trawling responsiveness tastiest pulsed restamps telescoping pneuma lampoonist divas " +
+        String candidate = "trawling responsiveness tastiest pulsed restamps telescoping pneuma lampoonist divas " +
                 "theosophists pustules checkrowed compactor conditionals envy hairball footslogs wasteful conjures " +
                 "deadfall stagnantly procure barked balmier bowery vagary beaten capitalized undersized towpath " +
                 "envisages thermoplastic rationalizers professions workbench underarm trudger icicled incisive " +
                 "oilbirds citrins chambrays ungainliness weazands prehardened dims determinants fishskin cleanable " +
-                "henceforward misarranges fine\"";
+                "henceforward misarranges fine";
 
-        int[] candidate_ciphertext = encrypt(keyMap, candidate);
+        int[] candidateCiphertext = encrypt(keyMap, candidate);
 
-        // TODO - See above!
-        // assert candidate.equals(problem1(candidate_ciphertext));
+        // TODO - check if working ...
+        List<String> candidateList = Arrays.asList(candidates.getCandidates());
+        ArrayList<String> candidateArray = new ArrayList<>(candidateList);
+
+        assert candidate.equals(problem1(candidateArray, frequencyMap, candidateCiphertext));
 
 
 
@@ -163,6 +168,10 @@ public class Simulation {
         // obviously we don't have the key ... but we do have our nice frequency map, and we might be able to build
         // a matching one!
 
+        int bkey = -1;
+        int jkey = -1;
+        int kkey = -1;
+
         String plaintext = "Nothing!";
         HashMap<String, ArrayList<Integer>> result = new HashMap<>();
 
@@ -173,17 +182,26 @@ public class Simulation {
         }
 
       for (String candidate : Candidates) {
+            boolean test = true;
           for (int i = 0; i < candidate.length(); i++) {
-              ArrayList list = result.get(Character.toString(candidate.charAt(i)));
-              list.add(ciphertext[i]);
+              if ((candidate.charAt(i) == 'b') && (bkey == -1))
+                  bkey = ciphertext[i];
+              if ((candidate.charAt(i) == 'j') && (jkey == -1))
+                  jkey = ciphertext[i];
+              if ((candidate.charAt(i) == 'k') && (kkey == -1))
+                  kkey = ciphertext[i];
 
-              if (list.size() > frequency.get(Character.toString(candidate.charAt(i))))
-                  break;
+              if (candidate.charAt(i) == 'b' && ciphertext[i] != bkey)
+                  test = false;
+              if (candidate.charAt(i) == 'j' && ciphertext[i] != jkey)
+                  test = false;
+              if (candidate.charAt(i) == 'k' && ciphertext[i] != kkey)
+                  test = false;
           }
-          plaintext = candidate;
+          if (test) plaintext = candidate;
       }
-
-
+        //TODO - work in progress ...
+        System.out.println("RESULT: " + plaintext);
         return plaintext;
     }
 }
