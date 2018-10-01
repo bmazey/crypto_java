@@ -168,40 +168,15 @@ public class Simulation {
         // obviously we don't have the key ... but we do have our nice frequency map, and we might be able to build
         // a matching one!
 
-        int bkey = -1;
-        int jkey = -1;
-        int kkey = -1;
+        // check to make sure frequency does not exceed expected frequency.
+        // check to make sure no two plaintexts map to same ciphertext.
 
-        String plaintext = "Nothing!";
-        HashMap<String, ArrayList<Integer>> result = new HashMap<>();
 
-        // this is dumb - clean this up later ...
-        // need to copy keys over
-        for (String s : frequency.keySet()) {
-            result.put(s, new ArrayList<>());
-        }
+        return new String();
+    }
 
-      for (String candidate : Candidates) {
-            boolean test = true;
-          for (int i = 0; i < candidate.length(); i++) {
-              if ((candidate.charAt(i) == 'b') && (bkey == -1))
-                  bkey = ciphertext[i];
-              if ((candidate.charAt(i) == 'j') && (jkey == -1))
-                  jkey = ciphertext[i];
-              if ((candidate.charAt(i) == 'k') && (kkey == -1))
-                  kkey = ciphertext[i];
+    public String problem2() {
 
-              if (candidate.charAt(i) == 'b' && ciphertext[i] != bkey)
-                  test = false;
-              if (candidate.charAt(i) == 'j' && ciphertext[i] != jkey)
-                  test = false;
-              if (candidate.charAt(i) == 'k' && ciphertext[i] != kkey)
-                  test = false;
-          }
-          if (test) plaintext = candidate;
-      }
-        //TODO - work in progress ...
-        System.out.println("RESULT: " + plaintext);
-        return plaintext;
+        return new String();
     }
 }
