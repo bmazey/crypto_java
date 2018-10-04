@@ -78,7 +78,9 @@ public class Simulation {
         List<String> candidateList = Arrays.asList(candidates.getCandidates());
         ArrayList<String> candidateArray = new ArrayList<>(candidateList);
 
-        assert candidate.equals(problem1(candidateArray, frequencyMap, candidateCiphertext));
+        // assert candidate.equals(problem1(candidateArray, frequencyMap, candidateCiphertext));
+
+        System.out.println("candidate ciphertext: " + Arrays.toString(candidateCiphertext));
 
 
 
@@ -99,7 +101,6 @@ public class Simulation {
 
         for (String key : map.keySet()){
             for (int i = 0; i < map.get(key); i++) {
-                System.out.println("size: " + numbers.size());
                 Integer number = numbers.get(r.nextInt(numbers.size()));
                 ArrayList keylist = result.get(key);
                 keylist.add(number);
