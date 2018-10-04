@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.nyu.dto.Candidates;
 import org.nyu.dto.Dictionary;
 import org.nyu.dto.Frequency;
 import org.springframework.core.io.ClassPathResource;
@@ -33,13 +34,14 @@ public class Simulation {
         // to classpath
         File frequencyFile = new ClassPathResource("frequency.json").getFile();
         File dictionaryFile = new ClassPathResource("dictionary.json").getFile();
-
-        // TODO - MARSHALL CANDIDATES MAP FOR FIRST ARG IN PROBLEM1 METHOD!
+        File candidateFile = new ClassPathResource("candidates.json").getFile();
 
         // now let's use our object mappers to convert these JSON files into POJOs
         ObjectMapper objectMapper = new ObjectMapper();
         Frequency frequency = objectMapper.readValue(frequencyFile, Frequency.class);
         Dictionary dictionary = objectMapper.readValue(dictionaryFile, Dictionary.class);
+        Candidates candidates = objectMapper.readValue(candidateFile, Candidates.class);
+
 
         @SuppressWarnings("unchecked")
         HashMap<String, Integer> frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
@@ -63,17 +65,22 @@ public class Simulation {
 
 
         // Let's try something harder ...
-        String candidate = "\"trawling responsiveness tastiest pulsed restamps telescoping pneuma lampoonist divas " +
+        String candidate = "trawling responsiveness tastiest pulsed restamps telescoping pneuma lampoonist divas " +
                 "theosophists pustules checkrowed compactor conditionals envy hairball footslogs wasteful conjures " +
                 "deadfall stagnantly procure barked balmier bowery vagary beaten capitalized undersized towpath " +
                 "envisages thermoplastic rationalizers professions workbench underarm trudger icicled incisive " +
                 "oilbirds citrins chambrays ungainliness weazands prehardened dims determinants fishskin cleanable " +
-                "henceforward misarranges fine\"";
+                "henceforward misarranges fine";
 
-        int[] candidate_ciphertext = encrypt(keyMap, candidate);
+        int[] candidateCiphertext = encrypt(keyMap, candidate);
 
-        // TODO - See above!
-        // assert candidate.equals(problem1(candidate_ciphertext));
+        // TODO - check if working ...
+        List<String> candidateList = Arrays.asList(candidates.getCandidates());
+        ArrayList<String> candidateArray = new ArrayList<>(candidateList);
+
+        // assert candidate.equals(problem1(candidateArray, frequencyMap, candidateCiphertext));
+
+        System.out.println("candidate ciphertext: " + Arrays.toString(candidateCiphertext));
 
 
 
@@ -94,7 +101,6 @@ public class Simulation {
 
         for (String key : map.keySet()){
             for (int i = 0; i < map.get(key); i++) {
-                System.out.println("size: " + numbers.size());
                 Integer number = numbers.get(r.nextInt(numbers.size()));
                 ArrayList keylist = result.get(key);
                 keylist.add(number);
@@ -163,27 +169,15 @@ public class Simulation {
         // obviously we don't have the key ... but we do have our nice frequency map, and we might be able to build
         // a matching one!
 
-        String plaintext = "Nothing!";
-        HashMap<String, ArrayList<Integer>> result = new HashMap<>();
-
-        // this is dumb - clean this up later ...
-        // need to copy keys over
-        for (String s : frequency.keySet()) {
-            result.put(s, new ArrayList<>());
-        }
-
-      for (String candidate : Candidates) {
-          for (int i = 0; i < candidate.length(); i++) {
-              ArrayList list = result.get(Character.toString(candidate.charAt(i)));
-              list.add(ciphertext[i]);
-
-              if (list.size() > frequency.get(Character.toString(candidate.charAt(i))))
-                  break;
-          }
-          plaintext = candidate;
-      }
+        // check to make sure frequency does not exceed expected frequency.
+        // check to make sure no two plaintexts map to same ciphertext.
 
 
-        return plaintext;
+        return new String();
+    }
+
+    public String problem2() {
+
+        return new String();
     }
 }
