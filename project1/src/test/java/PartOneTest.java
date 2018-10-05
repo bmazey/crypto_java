@@ -33,6 +33,9 @@ public class PartOneTest {
     @Autowired
     Decryptor decryptor;
 
+    @Autowired
+    MessageGenerator messageGenerator;
+
     private Random r;
 
 
@@ -81,5 +84,11 @@ public class PartOneTest {
 
         //TODO - do something with it! Merging dev -> master ...
 
+    }
+
+    @Test
+    public void partTwo() {
+        System.out.println("message: " + messageGenerator.generateMessage());
+        System.out.println("message length: " + messageGenerator.generateMessage().length());
     }
 }
