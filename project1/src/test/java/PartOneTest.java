@@ -35,6 +35,7 @@ public class PartOneTest {
 
     private Random r;
 
+    private HashMap<String, ArrayList<Integer>> key;
 
     @Test
     public void partOneScheduler() throws IOException {
@@ -57,6 +58,28 @@ public class PartOneTest {
 
         //TODO - do something with it! Merging dev -> master ...
 
+    }
+
+    @Test
+    public void partOneRandom() throws IOException {
+
+        r = new Random();
+        Candidates candidates = candidateGenerator.generateCandidates();
+
+        HashMap<String, ArrayList<Integer>> key = keyGenerator.generateKey();
+        // now we'll draft a random candidate ...
+        String candidate = candidates.getCandidates()[r.nextInt(candidates.getCandidates().length)];
+
+        int[] ciphertext = encryptor.encrypt(key, candidate);
+
+        for (String keys : key.keySet()) {
+            System.out.println(keys + " : " + Arrays.toString(key.get(keys).toArray()));
+        }
+
+        System.out.println("plaintext: " + candidate);
+        System.out.println("ciphertext: " + Arrays.toString(ciphertext));
+
+        //TODO - do something with it! Merging dev -> master ...
 
     }
 }
