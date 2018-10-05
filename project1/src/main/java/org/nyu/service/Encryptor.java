@@ -34,4 +34,33 @@ public class Encryptor {
         return ciphertextArray;
 
     }
+
+    public int[] encryptMod(HashMap<String, ArrayList<Integer>> keyMap, String plaintext) {
+
+        /**
+         * this works differently, we do not pull a random number from the keyspace, instead we do ...
+         *
+         *                      cipher = plaintext[i] % key_list.length()
+         */
+
+        int[] ciphertextArray = new int[plaintext.length()];
+
+        for(int i = 0; i < plaintext.length(); i++) {
+
+            if (plaintext.charAt(i) == ' ') {
+                ArrayList<Integer> temp = keyMap.get("space");
+                int cipher = temp.get(i % temp.size());
+                ciphertextArray[i] = cipher;
+                continue;
+            }
+
+            ArrayList<Integer> temp = keyMap.get(Character.toString(plaintext.charAt(i)));
+
+            int cipher = temp.get(i % temp.size());
+            ciphertextArray[i] = cipher;
+
+        }
+
+        return ciphertextArray;
+    }
 }
