@@ -48,7 +48,8 @@ public class PartOneTest {
         r = new Random();
         Candidates candidates = candidateGenerator.generateCandidates();
 
-        HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
+        // HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
+        HashMap<String, ArrayList<Integer>> key = deserialzeKey();
         // now we'll draft a random candidate ...
         String candidate = candidates.getCandidates()[r.nextInt(candidates.getCandidates().length)];
 
@@ -120,12 +121,22 @@ public class PartOneTest {
     }
 
     public void serializeKey(HashMap<String, ArrayList<Integer>> key) {
-
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(new File("key.json"), key);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public HashMap<String, ArrayList<Integer>> deserialzeKey() {
+        HashMap<String, ArrayList<Integer>> key = new HashMap<>();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            key = mapper.readValue(new ClassPathResource("key.json").getFile(), HashMap.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return key;
     }
 }
