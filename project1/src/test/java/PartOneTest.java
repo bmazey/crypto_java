@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nyu.ProjectOneApplication;
@@ -5,8 +6,10 @@ import org.nyu.dto.Candidates;
 import org.nyu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +60,8 @@ public class PartOneTest {
 
         System.out.println("plaintext: " + candidate);
         System.out.println("ciphertext: " + Arrays.toString(ciphertext));
+
+        serializeKey(key);
 
         //TODO - do something with it! Merging dev -> master ...
 
@@ -112,5 +117,15 @@ public class PartOneTest {
         int[] ciphertext = encryptor.encrypt(key, plaintext);
 
         System.out.println("part two ciphertext2: " + Arrays.toString(ciphertext));
+    }
+
+    public void serializeKey(HashMap<String, ArrayList<Integer>> key) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File("key.json"), key);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
