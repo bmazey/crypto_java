@@ -6,7 +6,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 @Service
@@ -16,12 +15,18 @@ public class FrequencyGenerator {
     private ObjectMapper mapper;
 
 
-    public HashMap<String, Integer> generateFrequency() throws IOException {
+    public HashMap<String, Integer> generateFrequency() {
         mapper = new ObjectMapper();
-        frequencyFile  = new ClassPathResource("frequency.json").getFile();
+        HashMap<String, Integer> frequency = new HashMap<>();
+        try {
+            frequencyFile  = new ClassPathResource("frequency.json").getFile();
 
-        @SuppressWarnings("unchecked")
-        HashMap<String, Integer> frequency = mapper.readValue(frequencyFile, HashMap.class);
+            // see if this warning can be fixed ...
+            frequency = mapper.readValue(frequencyFile, HashMap.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return frequency;
     }

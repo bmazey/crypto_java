@@ -16,12 +16,24 @@ import static java.util.stream.Collectors.toSet;
 public class KeyGenerator {
 
     @Autowired
-    FrequencyGenerator frequencyGenerator;
+    private FrequencyGenerator frequencyGenerator;
+
+    private HashMap<String, ArrayList<Integer>> key;
 
     // this is set to 106 because Random.nextInt(inclusive, exclusive) ...
     final int KEYSPACE = 106;
 
-    public HashMap<String, ArrayList<Integer>> generateKey() throws IOException {
+    public HashMap<String, ArrayList<Integer>> getKey() {
+        if (key == null) key = generateKey();
+        return key;
+    }
+
+    public void setKey(HashMap<String, ArrayList<Integer>> key) {
+        this.key = key;
+    }
+
+
+    public HashMap<String, ArrayList<Integer>> generateKey() {
 
         Random r = new Random();
         HashMap<String, Integer> map = frequencyGenerator.generateFrequency();

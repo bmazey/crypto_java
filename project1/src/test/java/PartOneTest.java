@@ -35,7 +35,7 @@ public class PartOneTest {
 
     private Random r;
 
-    private HashMap<String, ArrayList<Integer>> key;
+    private HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
 
     @Test
     public void partOneScheduler() throws IOException {
@@ -43,7 +43,6 @@ public class PartOneTest {
         r = new Random();
         Candidates candidates = candidateGenerator.generateCandidates();
 
-        HashMap<String, ArrayList<Integer>> key = keyGenerator.generateKey();
         // now we'll draft a random candidate ...
         String candidate = candidates.getCandidates()[r.nextInt(candidates.getCandidates().length)];
 
