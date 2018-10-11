@@ -60,6 +60,7 @@ public class Backtracker {
 
         String word = words[count];
 
+        // need to handle this case
         if (position + word.length() > ciphertext.length) {
             // placeholder
             plaintext = builder.toString();
@@ -109,7 +110,8 @@ public class Backtracker {
 
         //if (builder.length() == 500) plaintext = builder.toString();
 
-        position += word.length() + 1;
+        // +2 because of space and start on next position
+        position += word.length() + 2;
 
         count++;
 
