@@ -74,7 +74,7 @@ public class PartOneTest {
         r = new Random();
         Candidates candidates = candidateGenerator.generateCandidates();
 
-        HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
+        HashMap<String, ArrayList<Integer>> key = deserialzeKey();
 
         // now we'll draft a random candidate ...
         String candidate = candidates.getCandidates()[r.nextInt(candidates.getCandidates().length)];
@@ -92,33 +92,7 @@ public class PartOneTest {
 
     }
 
-    @Test
-    public void partTwoScheduler() {
 
-        String plaintext = messageGenerator.generateMessage();
-        System.out.println("message: " + plaintext);
-        System.out.println("message length: " + plaintext.length());
-
-        HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
-
-        int[] ciphertext = encryptor.encryptMod(key, plaintext);
-
-        System.out.println("part two ciphertext: " + Arrays.toString(ciphertext));
-    }
-
-    @Test
-    public void partTwoRandom() {
-
-        String plaintext = messageGenerator.generateMessage();
-        System.out.println("message2: " + plaintext);
-        System.out.println("message2 length: " + plaintext.length());
-
-        HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
-
-        int[] ciphertext = encryptor.encrypt(key, plaintext);
-
-        System.out.println("part two ciphertext2: " + Arrays.toString(ciphertext));
-    }
 
     public void serializeKey(HashMap<String, ArrayList<Integer>> key) {
         ObjectMapper mapper = new ObjectMapper();

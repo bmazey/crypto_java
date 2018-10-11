@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.nyu.dto.Dictionary;
 import org.nyu.dto.FrequencyPojo;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class Backtracker {
@@ -37,16 +39,16 @@ public class Backtracker {
     }
 
 
-    public void backtrack() {
-
-        HashMap<String, List<Integer>> conjectureMap = new HashMap<>();
-
-        // TODO - implement ... previous made no sense!
-        for (String word : dictionary.getWords()) {
-
-        }
-
-    }
+//    public Optional<String> backtrack(int[] ciphertext) {
+//
+//        HashMap<String, List<Integer>> conjectureMap = new HashMap<>();
+//
+//        // TODO - implement ... previous made no sense!
+//        for (String word : dictionary.getWords()) {
+//
+//        }
+//
+//    }
 
     // first map is original frequency map, second is conjecture map
     public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, List<Integer>> map2) {
