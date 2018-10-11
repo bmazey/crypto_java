@@ -73,10 +73,13 @@ public class Backtracker {
             ArrayList<Integer> list = map.get(key);
 
             // don't add if already exists!
-            if (!list.contains(ciphertext[i])) list.add(ciphertext[i]);
+            if (!list.contains(ciphertext[i])) {
+                list.add(ciphertext[i]);
+            }
+
+            System.out.println(key + " : " + Arrays.toString(list.toArray()));
 
             if (list.size() > frequencyMap.get(key)) {
-                System.out.println(Arrays.toString(list.toArray()));
                 return;
             }
 
@@ -88,7 +91,11 @@ public class Backtracker {
 
         // here's the space case
         ArrayList<Integer> list = map.get("space");
-        list.add(ciphertext[position + word.length() + 1]);
+        if (!list.contains(ciphertext[position + word.length() + 1])) {
+            list.add(ciphertext[position + word.length() + 1]);
+        }
+
+        System.out.println("space : " + Arrays.toString(list.toArray()));
 
         if (list.size() > frequencyMap.get("space")) {
             return;
