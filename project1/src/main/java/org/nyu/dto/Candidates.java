@@ -40,7 +40,8 @@ public class Candidates {
 			String temp = s.replaceAll(".(?!$)", "$0,");
 			int count = 0;
 			String[] split_s = temp.split(",");
-			for (int i = 0; i < 400; i++) {
+			int length = (split.length > split_s.length) ? split_s.length : split.length;
+			for (int i = 0; i < length; i++) {
 				try {
 					if (split[i].equalsIgnoreCase(split_s[i]))
 						count++;
