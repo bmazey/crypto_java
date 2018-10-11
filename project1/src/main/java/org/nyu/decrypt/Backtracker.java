@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class Backtracker {
 
@@ -20,6 +17,7 @@ public class Backtracker {
     private String ciphertext;
     private Random random;
     private HashMap<String, Integer> frequencyMap;
+    private StringBuilder builder;
 
     @SuppressWarnings("unchecked")
     public Backtracker(String ciphertext) throws IOException {
@@ -39,16 +37,28 @@ public class Backtracker {
     }
 
 
-//    public Optional<String> backtrack(int[] ciphertext) {
-//
-//        HashMap<String, List<Integer>> conjectureMap = new HashMap<>();
-//
-//        // TODO - implement ... previous made no sense!
-//        for (String word : dictionary.getWords()) {
-//
+    public void backtrack(int[] ciphertext) {
+
+        int position = 0;
+        builder = new StringBuilder();
+
+        HashMap<String, ArrayList<Integer>> conjectureMap = new HashMap<>();
+
+        //copy key set from frequency map to conjecture map
+        for (String key : frequencyMap.keySet()) {
+            conjectureMap.put(key, new ArrayList<>());
+        }
+
+    }
+
+//    public void backtrack(HashMap<String, ArrayList<Integer>> map, int[] ciphertext, int word, int position) {
+//        for (int i = position; i < word.length + position; i++) {
+//            ArrayList<Integer> list = map.get(word.charAt())
 //        }
 //
+//        backtrack(map, ciphertext, word + 1, position + word);
 //    }
+
 
     // first map is original frequency map, second is conjecture map
     public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, List<Integer>> map2) {
