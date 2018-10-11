@@ -62,7 +62,6 @@ public class Backtracker {
 
         // need to handle this case
         if (position + word.length() > ciphertext.length) {
-            // placeholder
             plaintext = builder.toString();
             return;
         }
