@@ -1,15 +1,14 @@
 package org.nyu.decrypt;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.HashMap;
 
 import org.nyu.dto.Candidates;
 import org.nyu.dto.Key;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 public class Decrypt {
 
@@ -26,11 +25,12 @@ public class Decrypt {
 		this.keyMap = new CreateKeyMap();
 		string_Deduced_Data();
 		ObjectMapper mapper = new ObjectMapper();
-		if (new File("resources/key.txt").exists()) {
+		this.keyMapping = new HashMap<Integer, String>();
+		if (new ClassPathResource("key.txt").exists()) {
 			this.keyMap.createKeyList();
-			this.keyMapping = new HashMap<Integer, String>();
+
 			try {
-				BufferedReader br = new BufferedReader(new FileReader(new File("resources/key.txt")));
+				BufferedReader br = new BufferedReader(new FileReader(new ClassPathResource("key.txt").getFile()));
 				String line = br.readLine();
 				while (null != line) {
 					String[] splits = line.split(",");
@@ -54,14 +54,18 @@ public class Decrypt {
 		}
 		if (strategy.equalsIgnoreCase("1")) {
 			try {
-				File file = new File("resources/candidates.json");
+				File file = new ClassPathResource("candidates.json").getFile();
 				this.candidates = mapper.readValue(file, Candidates.class);
 				this.candidates.modifyCandidates();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			System.out.println(ciphertext);
-			attemptDecryptByStrategy1();
+			try {
+				attemptDecryptByStrategy1();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -87,10 +91,10 @@ public class Decrypt {
 		 */
 	}
 
-	private void attemptDecryptByStrategy1() {
+	private void attemptDecryptByStrategy1() throws IOException {
 
-		File file = new File("resources/key.txt");
-		if (!file.exists()) {
+		boolean exists = new ClassPathResource("key.txt").exists();
+		if (!exists) {
 			Strategy strategy = new Strategy(this.ciphertext, 0, 105, this.candidates);
 			strategy.run();
 			int index = strategy.getIndexOfMessage();
@@ -124,8 +128,9 @@ public class Decrypt {
 	private void mapKey(String message, String message_comma_seperated) {
 
 		try {
-			File file = new File("resources/key.txt");
-			if (!file.exists()) {
+			boolean exists = new ClassPathResource("key.txt").exists();
+			if (!exists) {
+				File file = new File("src/main/resources/key.txt");
 				Key[] keyList = keyMap.getKeyList();
 				HashMap<String, Integer> map = keyMap.getFrequencyMap();
 				String[] cipher_temp = this.ciphertext.split(",");

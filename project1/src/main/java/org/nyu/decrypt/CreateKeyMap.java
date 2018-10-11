@@ -9,6 +9,7 @@ import org.nyu.dto.Frequency;
 import org.nyu.dto.Key;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * Idea is to prepare the key map as we decrypt or run decryption strategies on
@@ -29,7 +30,7 @@ public class CreateKeyMap {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			// read JSON file to prepare the key map
-			Frequency[] lengthOfList = mapper.readValue(new File("resources/frequency.json"), Frequency[].class);
+			Frequency[] lengthOfList = mapper.readValue(new ClassPathResource("frequency2.json").getFile(), Frequency[].class);
 			int i = 0;
 			for (Frequency list : lengthOfList) {
 				keyList[i] = new Key(list.getLetter(), list.getFrequency());
@@ -58,7 +59,7 @@ public class CreateKeyMap {
 		File file = new File("resources/key.txt");
 		try {
 			int count = 0;
-			BufferedReader br = new BufferedReader(new FileReader(new File("resources/key.txt")));
+			BufferedReader br = new BufferedReader(new FileReader(new ClassPathResource("key.txt").getFile()));
 			String line = br.readLine();
 			while (null != line) {
 				String[] splits = line.split(",");
