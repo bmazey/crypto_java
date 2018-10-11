@@ -2,7 +2,7 @@ package org.nyu.decrypt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.nyu.dto.Dictionary;
-import org.nyu.dto.Frequency;
+import org.nyu.dto.FrequencyPojo;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
@@ -14,7 +14,7 @@ import java.util.Random;
 public class Backtracker {
 
     private Dictionary dictionary;
-    private Frequency frequency;
+    private FrequencyPojo frequency;
     private String ciphertext;
     private Random random;
     private HashMap<String, Integer> frequencyMap;
@@ -30,7 +30,7 @@ public class Backtracker {
 
         ObjectMapper objectMapper = new ObjectMapper();
         this.dictionary = objectMapper.readValue(dictionaryFile, Dictionary.class);
-        this.frequency = objectMapper.readValue(frequencyFile, Frequency.class);
+        this.frequency = objectMapper.readValue(frequencyFile, FrequencyPojo.class);
 
         frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
 

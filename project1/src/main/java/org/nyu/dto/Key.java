@@ -2,253 +2,65 @@ package org.nyu.dto;
 
 public class Key {
 
-    /**
-     * This class represents a key POJO
-     * b.mazey@nyu.edu
-     */
+	private String letter;
+	private int array[];
 
-    private int[] space;
-    private int[] a;
-    private int[] b;
-    private int[] c;
-    private int[] d;
-    private int[] e;
-    private int[] f;
-    private int[] g;
-    private int[] h;
-    private int[] i;
-    private int[] j;
-    private int[] k;
-    private int[] l;
-    private int[] m;
-    private int[] n;
-    private int[] o;
-    private int[] p;
-    private int[] q;
-    private int[] r;
-    private int[] s;
-    private int[] t;
-    private int[] u;
-    private int[] v;
-    private int[] w;
-    private int[] x;
-    private int[] y;
-    private int[] z;
+	public Key(String value, int size) {
+		this.letter = value;
+		this.array = new int[size];
+		for (int i = 0; i < array.length; i++) {
+			array[i] = -1;
+		}
+	}
 
-    public int[] getSpace() {
-        return space;
-    }
+	/**
+	 * Returns the letter assigned
+	 * 
+	 * @return
+	 */
+	public String getLetter() {
+		return this.letter;
+	}
 
-    public void setSpace(int[] space) {
-        this.space = space;
-    }
+	/**
+	 * Set the letter a..b for space we will use " "
+	 * 
+	 * @param letter
+	 */
+	public void setLetter(String letter) {
+		this.letter = letter;
+	}
 
-    public int[] getA() {
-        return a;
-    }
+	public int[] getArray() {
+		return array;
+	}
 
-    public void setA(int[] a) {
-        this.a = a;
-    }
+	public void setArray(int[] array) {
+		this.array = array;
+	}
 
-    public int[] getB() {
-        return b;
-    }
+	/**
+	 * Set the values at the exact position. pos can take values from 1 to size. It
+	 * follows 1..(size-1)
+	 * 
+	 * @param num
+	 * @param pos
+	 */
+	public void setAtPosition(int num, int pos) {
+		if (this.array[pos] == -1)
+			this.array[pos] = num;
+	}
 
-    public void setB(int[] b) {
-        this.b = b;
-    }
+	/**
+	 * 
+	 * @param num
+	 */
+	public void setAtPosition(int num) {
 
-    public int[] getC() {
-        return c;
-    }
-
-    public void setC(int[] c) {
-        this.c = c;
-    }
-
-    public int[] getD() {
-        return d;
-    }
-
-    public void setD(int[] d) {
-        this.d = d;
-    }
-
-    public int[] getE() {
-        return e;
-    }
-
-    public void setE(int[] e) {
-        this.e = e;
-    }
-
-    public int[] getF() {
-        return f;
-    }
-
-    public void setF(int[] f) {
-        this.f = f;
-    }
-
-    public int[] getG() {
-        return g;
-    }
-
-    public void setG(int[] g) {
-        this.g = g;
-    }
-
-    public int[] getH() {
-        return h;
-    }
-
-    public void setH(int[] h) {
-        this.h = h;
-    }
-
-    public int[] getI() {
-        return i;
-    }
-
-    public void setI(int[] i) {
-        this.i = i;
-    }
-
-    public int[] getJ() {
-        return j;
-    }
-
-    public void setJ(int[] j) {
-        this.j = j;
-    }
-
-    public int[] getK() {
-        return k;
-    }
-
-    public void setK(int[] k) {
-        this.k = k;
-    }
-
-    public int[] getL() {
-        return l;
-    }
-
-    public void setL(int[] l) {
-        this.l = l;
-    }
-
-    public int[] getM() {
-        return m;
-    }
-
-    public void setM(int[] m) {
-        this.m = m;
-    }
-
-    public int[] getN() {
-        return n;
-    }
-
-    public void setN(int[] n) {
-        this.n = n;
-    }
-
-    public int[] getO() {
-        return o;
-    }
-
-    public void setO(int[] o) {
-        this.o = o;
-    }
-
-    public int[] getP() {
-        return p;
-    }
-
-    public void setP(int[] p) {
-        this.p = p;
-    }
-
-    public int[] getQ() {
-        return q;
-    }
-
-    public void setQ(int[] q) {
-        this.q = q;
-    }
-
-    public int[] getR() {
-        return r;
-    }
-
-    public void setR(int[] r) {
-        this.r = r;
-    }
-
-    public int[] getS() {
-        return s;
-    }
-
-    public void setS(int[] s) {
-        this.s = s;
-    }
-
-    public int[] getT() {
-        return t;
-    }
-
-    public void setT(int[] t) {
-        this.t = t;
-    }
-
-    public int[] getU() {
-        return u;
-    }
-
-    public void setU(int[] u) {
-        this.u = u;
-    }
-
-    public int[] getV() {
-        return v;
-    }
-
-    public void setV(int[] v) {
-        this.v = v;
-    }
-
-    public int[] getW() {
-        return w;
-    }
-
-    public void setW(int[] w) {
-        this.w = w;
-    }
-
-    public int[] getX() {
-        return x;
-    }
-
-    public void setX(int[] x) {
-        this.x = x;
-    }
-
-    public int[] getY() {
-        return y;
-    }
-
-    public void setY(int[] y) {
-        this.y = y;
-    }
-
-    public int[] getZ() {
-        return z;
-    }
-
-    public void setZ(int[] z) {
-        this.z = z;
-    }
-
+		for (int pos = 0; pos < this.array.length; pos++)
+			if (this.array[pos] == -1) {
+				this.array[pos] = num;
+				break;
+			}
+	}
 }
