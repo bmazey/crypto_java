@@ -58,6 +58,12 @@ public class Backtracker {
 
         maptrack(conjectureMap, dictionary.getWords(), ciphertext, 0);
 
+        System.out.println("here's our map ...");
+
+        for (String key : conjectureMap.keySet()) {
+            System.out.println(key + " : " + Arrays.toString(conjectureMap.get(key).toArray()));
+        }
+
     }
 
     private void backtrack(HashMap<String, ArrayList<Integer>> map, int[] ciphertext, String[] words, int index,
@@ -135,68 +141,79 @@ public class Backtracker {
     public void maptrack(HashMap<String, ArrayList<Integer>> map, String[] words, int[] ciphertext, int position) {
 
         // this is our base case!
-        int sum = 0;
+        ArrayList<Integer> sum = new ArrayList<>();
         for (ArrayList<Integer> list : map.values()) {
-            sum += list.size();
-        }
-        if(sum == 105) {
-            System.out.println("success!");
-            plaintext = decryptor.decrypt(map, ciphertext);
+            sum.addAll(list);
         }
 
+        boolean flag = true;
+        for (int j : ciphertext) {
+            if(!sum.contains(j)) {
+                flag = false;
+            }
+        }
+
+        if(flag) {
+            plaintext = decryptor.decrypt(map, ciphertext);
+            return;
+        }
+
+        HashMap<String, ArrayList<Integer>> clone = (HashMap)map.clone();
+
+        // now we'll step over each word ...
         for (String word : words) {
             // this loop exists solely to map ciphertext values to our conjecture keyspace.
             // k is used to keep track of the character position within the word.
             int k = 0;
             for (int i = position; i < position + word.length(); i++) {
                 String key = Character.toString(word.charAt(k));
-                ArrayList<Integer> list = map.get(key);
+                ArrayList<Integer> list = clone.get(key);
 
                 // don't add if already exists!
                 if (!list.contains(ciphertext[i])) {
                     list.add(ciphertext[i]);
                 }
 
-                System.out.println(key + " : " + Arrays.toString(list.toArray()));
-
                 if (list.size() > frequencyMap.get(key)) {
                     // do we return here?
-                    return;
+                    continue;
                 }
 
                 else {
-                    map.put(key, list);
+                    clone.put(key, list);
                 }
 
+                System.out.println(key + " : " + Arrays.toString(list.toArray()));
                 // increment k for character position
                 k++;
             }
 
             // now we can assume the word "fits"
             // here's the space case
-            ArrayList<Integer> list = map.get("space");
+            ArrayList<Integer> list = clone.get("space");
             if (!list.contains(ciphertext[position + word.length() + 1])) {
                 list.add(ciphertext[position + word.length() + 1]);
             }
 
-            System.out.println("space : " + Arrays.toString(list.toArray()));
-
             if (list.size() > frequencyMap.get("space")) {
-                return;
+                // do we return
+                continue;
             }
 
             else {
-                map.put("space", list);
+                clone.put("space", list);
             }
 
+            System.out.println("space : " + Arrays.toString(list.toArray()));
+
             position += word.length() + 2;
-            maptrack(map, dictionary.getWords(), ciphertext, position);
+
+
+            maptrack(clone, dictionary.getWords(), ciphertext, position);
 
         }
 
     }
-
-
 
     // first map is original frequency map, second is conjecture map
     public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, List<Integer>> map2) {
