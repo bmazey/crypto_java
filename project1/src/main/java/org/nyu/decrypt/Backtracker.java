@@ -3,6 +3,8 @@ package org.nyu.decrypt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.nyu.dto.Dictionary;
 import org.nyu.dto.FrequencyPojo;
+import org.nyu.service.Decryptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Backtracker {
+
+    @Autowired
+    Decryptor decryptor;
 
     private Dictionary dictionary;
     private FrequencyPojo frequency;
@@ -124,6 +129,19 @@ public class Backtracker {
         index++;
 
         backtrack(map, ciphertext, words, index, position, builder);
+
+    }
+
+    public void maptrack(HashMap<String, ArrayList<Integer>> map, int[] ciphertext) {
+
+        // this is our base case!
+        int sum = 0;
+        for (ArrayList<Integer> list : map.values()) {
+            sum += list.size();
+        }
+        if(sum == 105) {
+            plaintext = decryptor.decrypt(map, ciphertext);
+        }
 
     }
 
