@@ -21,7 +21,6 @@ public class Backtracker {
     private Random random;
     private HashMap<String, Integer> frequencyMap;
 
-    @SuppressWarnings("unchecked")
     public Backtracker(String ciphertext) throws IOException {
 
         this.ciphertext = ciphertext;
@@ -35,20 +34,8 @@ public class Backtracker {
         this.frequency = objectMapper.readValue(frequencyFile, FrequencyPojo.class);
 
         frequencyMap = objectMapper.readValue(frequencyFile, HashMap.class);
-
     }
 
-
-//    public Optional<String> backtrack(int[] ciphertext) {
-//
-//        HashMap<String, List<Integer>> conjectureMap = new HashMap<>();
-//
-//        // TODO - implement ... previous made no sense!
-//        for (String word : dictionary.getWords()) {
-//
-//        }
-//
-//    }
 
     // first map is original frequency map, second is conjecture map
     public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, List<Integer>> map2) {
