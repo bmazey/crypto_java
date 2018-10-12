@@ -40,14 +40,20 @@ public class PartTwoTest {
     public void partTwoScheduler() {
 
         String plaintext = messageGenerator.generateMessage();
-        System.out.println("message: " + plaintext);
-        System.out.println("message length: " + plaintext.length());
 
-        HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
+            System.out.println("message: " + plaintext);
+            System.out.println("message length: " + plaintext.length());
 
-        int[] ciphertext = encryptor.encryptMod(key, plaintext);
+            HashMap<String, ArrayList<Integer>> key = keyGenerator.getKey();
 
-        System.out.println("part two ciphertext: " + Arrays.toString(ciphertext));
+            for (String keys : key.keySet()) {
+                System.out.println(keys + " : " + Arrays.toString(key.get(keys).toArray()));
+            }
+
+            int[] ciphertext = encryptor.encryptMod(key, plaintext);
+
+            System.out.println("part two cipher text: " + Arrays.toString(ciphertext));
+
     }
 
     @Test

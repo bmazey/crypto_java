@@ -143,7 +143,6 @@ public class Backtracker {
             maptrack(clone, dictionary.getWords(), ciphertext, position);
 
         }
-
     }
 
     public HashMap<String, ArrayList<Integer>> copymap(HashMap<String, ArrayList<Integer>> map) {

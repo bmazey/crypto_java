@@ -1,12 +1,16 @@
 package org.nyu.decrypt;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.nyu.dto.Candidates;
+import org.nyu.dto.Dictionary;
 import org.nyu.dto.Key;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.nyu.statics.StaticValues;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -15,6 +19,8 @@ public class Decrypt {
 	private String ciphertext;
 	private CreateKeyMap keyMap;
 	private Candidates candidates;
+	private Dictionary dictionary;
+	private ArrayList<String> listOfWords;
 	private HashMap<Integer, String> keyMapping;
 	private boolean complete;
 
@@ -28,7 +34,6 @@ public class Decrypt {
 		this.keyMapping = new HashMap<Integer, String>();
 		if (new ClassPathResource("key.txt").exists()) {
 			this.keyMap.createKeyList();
-
 			try {
 				BufferedReader br = new BufferedReader(new FileReader(new ClassPathResource("key.txt").getFile()));
 				String line = br.readLine();
@@ -66,6 +71,17 @@ public class Decrypt {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else if ( strategy.equalsIgnoreCase("2")) {
+			try {
+				File file = new ClassPathResource("dictionary.json").getFile();
+				this.dictionary = mapper.readValue(file, Dictionary.class);
+				this.listOfWords = new ArrayList<String>(Arrays.asList(dictionary.getWords()));
+				attemptDecryptByStrategy2();
+			} catch(Exception e) {
+                e.printStackTrace();
+			}
+		} else {
+			System.out.print("Erroneous input!!");
 		}
 
 	}
@@ -90,6 +106,36 @@ public class Decrypt {
 		 * cipher_letter_counts.get(letter) + " --> " + frequency); }
 		 */
 	}
+
+	private void attemptDecryptByStrategy2() {
+
+	    try {
+	        /*boolean bb_presence = false;
+	        ArrayList<Integer> listOfDuplicates = null;
+            String[] cipher_temp = this.ciphertext.split(",");
+	        for (int i = 2; i < cipher_temp.length - 1; i++){
+                if (cipher_temp[i].equalsIgnoreCase(cipher_temp[i+1])) {
+                    bb_presence = true;
+                    if (null == listOfDuplicates)
+                        listOfDuplicates = new ArrayList<Integer>();
+                    listOfDuplicates.add(i);
+                    keyMapping.put(Integer.valueOf(cipher_temp[i]), "b");
+                }
+            }
+            if (bb_presence) {
+
+            }*/
+            boolean exists = new ClassPathResource("key.txt").exists();
+            if (!exists) {
+                Strategy strategy = new Strategy(this.ciphertext);
+                strategy.runStrategy2();
+            } else {
+                System.out.println("Key is present");
+            }
+        } catch(Exception e) {
+	        e.printStackTrace();
+        }
+    }
 
 	private void attemptDecryptByStrategy1() throws IOException {
 
