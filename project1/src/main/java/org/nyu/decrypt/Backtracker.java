@@ -55,19 +55,22 @@ public class Backtracker {
 
     }
 
-    private void backtrack(HashMap<String, ArrayList<Integer>> map, int[] ciphertext, String[] words, int count,
+    private void backtrack(HashMap<String, ArrayList<Integer>> map, int[] ciphertext, String[] words, int index,
                            int position, StringBuilder builder) {
 
-        String word = words[count];
+        // we need a case to reset the map - when does that happen?
 
-        // need to handle this case
+        String word = words[index];
+
+        // this is our dummy base case ... it's missing the last bit of the ciphertext for now
         if (position + word.length() > ciphertext.length) {
             plaintext = builder.toString();
             return;
         }
 
+        // this loop exists solely to map ciphertext values to our conjecture keyspace.
+        // k is used to keep track of the character position within the word.
         int k = 0;
-
         for (int i = position; i < position + word.length(); i++) {
             String key = Character.toString(word.charAt(k));
             ArrayList<Integer> list = map.get(key);
@@ -80,6 +83,12 @@ public class Backtracker {
             System.out.println(key + " : " + Arrays.toString(list.toArray()));
 
             if (list.size() > frequencyMap.get(key)) {
+                // we can't just return here - how do we continue to backtrack?
+                // this word doesn't fit - move on to the next word.
+                index++;
+                backtrack(map, ciphertext, words, index, position, builder);
+
+                // do we return here?
                 return;
             }
 
@@ -112,9 +121,9 @@ public class Backtracker {
         // +2 because of space and start on next position
         position += word.length() + 2;
 
-        count++;
+        index++;
 
-        backtrack(map, ciphertext, words, count, position, builder);
+        backtrack(map, ciphertext, words, index, position, builder);
 
     }
 
