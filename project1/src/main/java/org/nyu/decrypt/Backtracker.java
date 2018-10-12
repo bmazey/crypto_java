@@ -153,6 +153,7 @@ public class Backtracker {
         }
 
         if(flag) {
+            System.out.println("SUCCESS!");
             this.plaintext = decryptor.decrypt(clone, ciphertext);
             return;
         }
@@ -160,65 +161,56 @@ public class Backtracker {
         // now we'll step over each word ...
         for (String word : words) {
 
+            if (position + word.length() + 1 >= ciphertext.length) {
+                // address this case ...
+                return;
+            }
+
             // here's the space case
             ArrayList<Integer> spaceList = clone.get("space");
             if (!spaceList.contains(ciphertext[position + word.length() + 1]) && checkUnique(clone, ciphertext[position + word.length() + 1])) {
+                spaceList.add(ciphertext[position + word.length() + 1]);
                 if (spaceList.size() > frequencyMap.get("space")) {
-                    // do we return
+                    // do we return?
                     continue;
                 }
-                // spaceList.add(ciphertext[position + word.length() + 1]);
+                // now we know the space is safe to add ...
+                clone.put("space", spaceList);
             }
-
 
             // this loop exists solely to map ciphertext values to our conjecture keyspace.
             // k is used to keep track of the character position within the word.
             int k = 0;
-            ArrayList<String> letters = new ArrayList<>();
-            ArrayList<Integer> ciphers = new ArrayList<>();
-
             for (int i = position; i < position + word.length(); i++) {
+
+                // get the current cipher values mapped to the letter
                 String key = Character.toString(word.charAt(k));
                 ArrayList<Integer> list = clone.get(key);
 
                 // don't add if already exists!
                 if (!list.contains(ciphertext[i]) && checkUnique(clone, ciphertext[i])) {
+                    list.add(ciphertext[i]);
                     if (list.size() > frequencyMap.get(key)) {
                         // do we return here?
                         break;
                     }
-                    //list.add(ciphertext[i]);
-                    letters.add(Character.toString(word.charAt(k)));
-                    ciphers.add(ciphertext[i]);
                 }
 
-                //System.out.println(key + " : " + Arrays.toString(list.toArray()));
+                // this is "safe" to add
+                clone.put(key, list);
 
                 // increment k for character position
                 k++;
             }
 
-            // "if we got through the whole word ... "
             if (k == word.length()) {
 
-                for(int x = 0; x < letters.size(); x++) {
-                    ArrayList<Integer> list = clone.get(letters.get(x));
-                    list.add(ciphers.get(x));
-                    clone.put(letters.get(x), list);
-                }
-
-                spaceList.add(ciphertext[position + word.length() + 1]);
-                clone.put("space", spaceList);
-
-
-
-                System.out.println("here's our CLONE ...");
-                for (String key : clone.keySet()) {
+                System.out.println("here's our copy array ... ");
+                for(String key : clone.keySet()) {
                     System.out.println(key + " : " + Arrays.toString(clone.get(key).toArray()));
                 }
 
                 position += word.length() + 2;
-
                 maptrack(clone, dictionary.getWords(), ciphertext, position);
             }
 
