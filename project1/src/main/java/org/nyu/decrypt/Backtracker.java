@@ -208,7 +208,6 @@ public class Backtracker {
 
             position += word.length() + 2;
 
-
             maptrack(clone, dictionary.getWords(), ciphertext, position);
 
         }
