@@ -25,6 +25,7 @@ public class Strategy {
 	private HashMap<String, Integer> occurences;
     private HashMap<String, Integer> frequencies;
 	private StringBuilder temp_decrypt_string;
+	private String[] partly_decrypt_string;
 
 	public Strategy(String cipher, int low, int high, Candidates candidates) {
 		this.value = -1;
@@ -40,6 +41,7 @@ public class Strategy {
 	public Strategy(String cipher) {
 		this.cipher = cipher;
         this.cipher_split = this.cipher.split(",");
+        this.partly_decrypt_string = null;
 	}
 
 	public void run() {
@@ -92,14 +94,24 @@ public class Strategy {
                 copy_cipher_comma = Arrays.copyOf(this.cipher_split, this.cipher_split.length);
                 this.temp_decrypt_string = new StringBuilder();
                 if (!runBackTrack(conjectureMap, copy_cipher_comma, word, 0)){
-                    System.out.println(conjectureMap);
+                    System.out.print(".");
                     conjectureMap = new HashMap<String, String>();
                     for (String key : this.occurences.keySet()) {
                         this.occurences.put(key, 0);
                     }
                 }
                 else {
-                    for (String value : conjectureMap.values()) {
+                    String[] split = partly_decrypt_string;
+                    this.temp_decrypt_string = new StringBuilder();
+                    for (int i = 0; i < partly_decrypt_string.length; i++) {
+                        if (conjectureMap.containsKey(split[i])) {
+                            this.temp_decrypt_string.append(conjectureMap.get(split[i]));
+                        } else {
+                            this.temp_decrypt_string.append(split[i]);
+                        }
+                    }
+                    System.out.println(this.temp_decrypt_string.toString());
+                    /*for (String value : conjectureMap.values()) {
                         int count = 0;
                         for (String key : conjectureMap.keySet()) {
                             if (conjectureMap.get(key).equalsIgnoreCase(value)) {
@@ -107,7 +119,8 @@ public class Strategy {
                             }
                         }
                         System.out.println(value + " : " + count);
-                    }
+                    }*/
+                    break;
                 }
             }
         }catch(Exception e) {
@@ -120,7 +133,7 @@ public class Strategy {
         HashMap<String, String> temp_conjecture_map = new HashMap<String, String>();
         HashMap<String, Integer> temp_occurences = new HashMap<String, Integer>();
         String[] temp_copy_cipher_text = new String[500];
-        if (map.size() < 107 || current + word.length() > 499) {
+        if (map.size() < 91) {
             String[] comma_word = word.replaceAll(".(?!$)", "$0,").split(",");
             int comma_word_counter = 0;
             for (int loop = current ; loop< current + comma_word.length ; loop++,comma_word_counter++) {
@@ -163,6 +176,12 @@ public class Strategy {
                     for (String number : temp_occurences.keySet()) {
                         this.occurences.put(number, temp_occurences.get(number));
                     }
+                } else {
+                    if (null == partly_decrypt_string ){
+                        this.partly_decrypt_string = new String[500];
+                        this.partly_decrypt_string = Arrays.copyOf(copy_cipher_comma, copy_cipher_comma.length);
+                    }
+                    return correct;
                 }
             }
             return correct;
