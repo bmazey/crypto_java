@@ -106,20 +106,64 @@ public class Strategy {
                     for (int i = 0; i < partly_decrypt_string.length; i++) {
                         if (conjectureMap.containsKey(split[i])) {
                             this.temp_decrypt_string.append(conjectureMap.get(split[i]));
+                            split[i] = conjectureMap.get(split[i]);
                         } else {
                             this.temp_decrypt_string.append(split[i]);
                         }
                     }
-                    System.out.println(this.temp_decrypt_string.toString());
-                    /*for (String value : conjectureMap.values()) {
-                        int count = 0;
-                        for (String key : conjectureMap.keySet()) {
-                            if (conjectureMap.get(key).equalsIgnoreCase(value)) {
-                                count++;
-                            }
+                    String regex = "\\d+";
+                    System.out.println("Partly Decrypted Key: ");
+                    System.out.println(temp_decrypt_string);
+                    int count_num = 0;
+                    boolean hasNumber = false;
+                    int count = 0;
+                    for (int i = 0;i< partly_decrypt_string.length;i++) {
+                        if ( split[i].matches(regex) ) {
+                            hasNumber = true;
+                            count_num++;
                         }
-                        System.out.println(value + " : " + count);
-                    }*/
+                        if ( split[i].equalsIgnoreCase(" ")) {
+                            if (hasNumber && count_num == 1) {
+                                String[] temp = new String[i - count];
+                                int arr_count = 0;
+                                for (int loop = count; loop < i; loop++) {
+                                    temp[arr_count++] = split[loop];
+                                }
+                                String matched_word[] = this.dictionary.checkForWord(temp);
+                                if ( null != matched_word) {
+                                    String num_to_be_updated = null;
+                                    int count_word = 0;
+                                    for (int loop = count; loop < i; loop++) {
+                                        if (split[loop].matches(regex)){
+                                            num_to_be_updated = split[count];
+                                            conjectureMap.put(split[count], matched_word[count_word]);
+                                        }
+                                        split[count] = matched_word[count_word++];
+                                        count++;
+                                    }
+                                    for (int loop = count; loop < split.length - 1; loop++) {
+                                        if (split[loop].equalsIgnoreCase(num_to_be_updated)) {
+                                            split[loop] = conjectureMap.get(num_to_be_updated);
+                                        }
+                                    }
+                                }
+                            }
+                            hasNumber = false;
+                            count_num = 0;
+                            count = i + 1;
+                        }
+                    }
+                    System.out.println("============================");
+                    this.temp_decrypt_string = new StringBuilder();
+                    for (int i = 0; i < partly_decrypt_string.length; i++) {
+                        if (conjectureMap.containsKey(split[i])) {
+                            this.temp_decrypt_string.append(conjectureMap.get(split[i]));
+                            split[i] = conjectureMap.get(split[i]);
+                        } else {
+                            this.temp_decrypt_string.append(split[i]);
+                        }
+                    }
+                    System.out.println(this.temp_decrypt_string);
                     break;
                 }
             }
@@ -168,6 +212,7 @@ public class Strategy {
                 temp_copy_cipher_text = Arrays.copyOf(copy_cipher_comma, copy_cipher_comma.length);
                 correct = runBackTrack(map, copy_cipher_comma, word_recursion, current);
                 if (!correct) {
+                    System.out.print(".");
                     copy_cipher_comma = Arrays.copyOf(temp_copy_cipher_text, temp_copy_cipher_text.length);
                     map.clear();
                     for (String number : temp_conjecture_map.keySet()) {

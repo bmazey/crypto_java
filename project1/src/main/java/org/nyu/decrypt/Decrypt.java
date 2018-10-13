@@ -110,21 +110,6 @@ public class Decrypt {
 	private void attemptDecryptByStrategy2() {
 
 	    try {
-	        /*boolean bb_presence = false;
-	        ArrayList<Integer> listOfDuplicates = null;
-            String[] cipher_temp = this.ciphertext.split(",");
-	        for (int i = 2; i < cipher_temp.length - 1; i++){
-                if (cipher_temp[i].equalsIgnoreCase(cipher_temp[i+1])) {
-                    bb_presence = true;
-                    if (null == listOfDuplicates)
-                        listOfDuplicates = new ArrayList<Integer>();
-                    listOfDuplicates.add(i);
-                    keyMapping.put(Integer.valueOf(cipher_temp[i]), "b");
-                }
-            }
-            if (bb_presence) {
-
-            }*/
             boolean exists = new ClassPathResource("key.txt").exists();
             if (!exists) {
                 Strategy strategy = new Strategy(this.ciphertext);
