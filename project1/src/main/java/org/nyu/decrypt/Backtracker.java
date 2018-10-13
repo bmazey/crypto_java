@@ -55,93 +55,79 @@ public class Backtracker {
 
         maptrack(conjectureMap, dictionary.getWords(), ciphertext, 0);
 
-        System.out.println("here's our map ...");
-
-        for (String key : conjectureMap.keySet()) {
-            System.out.println(key + " : " + Arrays.toString(conjectureMap.get(key).toArray()));
-        }
-
     }
 
 
     public void maptrack(HashMap<String, ArrayList<Integer>> map, String[] words, int[] ciphertext, int position) {
 
-        HashMap<String, ArrayList<Integer>> clone = copymap(map);
+        // start with a copy of the conjectureMap for this occurrence
+        HashMap<String, ArrayList<Integer>> copy = copymap(map);
 
-        // this is our base case!
-        ArrayList<Integer> sum = new ArrayList<>();
-        for (ArrayList<Integer> list : clone.values()) {
-            sum.addAll(list);
-        }
-
-        boolean flag = true;
-        for (int j : ciphertext) {
-            if(!sum.contains(j)) {
-                flag = false;
-            }
-        }
-
-        if(flag) {
-            System.out.println("SUCCESS!");
-            this.plaintext = decryptor.decrypt(clone, ciphertext);
+        if (!assertFrequency(frequencyMap, copy)) {
+            // this violates the frequency!
             return;
         }
 
-        // now we'll step over each word ...
+        // print map here
+        System.out.println("here's our map at position: " + position);
+        for (String key : copy.keySet()) {
+            System.out.println(key + " : " + Arrays.toString(copy.get(key).toArray()));
+        }
+
+
+        // here is our base case - if we have found a valid mapping for each number in the ciphertext, we can attempt
+        // to decrypt.
+        ArrayList<Integer> values = new ArrayList<>();
+        for (ArrayList<Integer> list :  copy.values()) {
+            values.addAll(list);
+        }
+
+        boolean ready = true;
+        for (int i = 0; i < ciphertext.length; i++) {
+            if (!values.contains(ciphertext[i])) ready = false;
+        }
+
+        if (ready) {
+            plaintext = decryptor.decrypt(copy, ciphertext);
+            System.out.println("success!");
+            return;
+        }
+
+
+        // ok now we have to build the map based on a guess
+        // guess each word until we find a word that fits
         for (String word : words) {
 
-            if (position + word.length() + 1 >= ciphertext.length) {
-                // address this case ...
+            // here's our dummy break case ...
+            if (position + word.length() + 1 > ciphertext.length) {
+                System.out.println("dummy break case reached!");
+                // TODO - FIXME!
                 return;
             }
 
-            // this loop exists solely to map ciphertext values to our conjecture keyspace.
-            // k is used to keep track of the character position within the word.
             int k = 0;
             for (int i = position; i < position + word.length(); i++) {
-
-                // get the current cipher values mapped to the letter
                 String key = Character.toString(word.charAt(k));
-                ArrayList<Integer> list = clone.get(key);
+                ArrayList<Integer> list = copy.get(key);
 
-                // don't add if already exists!
-                if (!list.contains(ciphertext[i]) && checkUnique(clone, ciphertext[i])) {
+                // no cipher value should be duplicated in the key
+                if (isUnique(copy, ciphertext[i])) {
                     list.add(ciphertext[i]);
-                    if (list.size() > frequencyMap.get(key)) {
-                        // do we return here?
-                        break;
-                    }
                 }
 
-                // this is "safe" to add
-                clone.put(key, list);
-
-                // increment k for character position
+                copy.put(key, list);
                 k++;
             }
 
-            if (k == word.length()) {
-
-                // here's the space case
-                ArrayList<Integer> list = clone.get("space");
-                if (!list.contains(ciphertext[position + word.length() + 1]) && checkUnique(clone, ciphertext[position + word.length() + 1])) {
-                    list.add(ciphertext[position + word.length() + 1]);
-                    if (list.size() > frequencyMap.get("space")) {
-                        // do we return?
-                        continue;
-                    }
-                    // now we know the space is safe to add ...
-                    clone.put("space", list);
-                }
-
-                System.out.println("here's our copy array ... ");
-                for(String key : clone.keySet()) {
-                    System.out.println(key + " : " + Arrays.toString(clone.get(key).toArray()));
-                }
+            // handle space case
+            ArrayList<Integer> list = copy.get("space");
+            if (isUnique(copy, ciphertext[position + word.length() + 1])) {
+                list.add(ciphertext[position + word.length() + 1]);
+                copy.put("space", list);
             }
-            position += word.length() + 2;
-            maptrack(clone, dictionary.getWords(), ciphertext, position);
 
+            position += word.length() + 2;
+            maptrack(copy, dictionary.getWords(), ciphertext, position);
         }
     }
 
@@ -154,7 +140,7 @@ public class Backtracker {
         return copy;
     }
 
-    public boolean checkUnique(HashMap<String, ArrayList<Integer>> map, int value) {
+    public boolean isUnique(HashMap<String, ArrayList<Integer>> map, int value) {
         boolean unique = true;
         for (ArrayList<Integer> list: map.values()) {
             if (list.contains(value)) unique = false;
@@ -163,7 +149,7 @@ public class Backtracker {
     }
 
     // first map is original frequency map, second is conjecture map
-    public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, List<Integer>> map2) {
+    public boolean assertFrequency(HashMap<String, Integer> map1, HashMap<String, ArrayList<Integer>> map2) {
         for (String key : map1.keySet()) {
             if (map2.get(key).size() > map1.get(key))
                 return false;
