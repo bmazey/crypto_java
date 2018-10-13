@@ -1,19 +1,21 @@
-package org.nyu.decrypt;
+package org.nyu.service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.nyu.decrypt.CreateKeyMap;
 import org.nyu.dto.Candidates;
 import org.nyu.dto.Dictionary;
 import org.nyu.dto.Key;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.nyu.statics.StaticValues;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class Decrypt {
 
 	private String ciphertext;
@@ -65,12 +67,10 @@ public class Decrypt {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+
 			System.out.println(ciphertext);
-			try {
-				attemptDecryptByStrategy1();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			attemptDecryptByStrategy1();
+
 		} else if ( strategy.equalsIgnoreCase("2")) {
 			try {
 				File file = new ClassPathResource("dictionary.json").getFile();
@@ -137,7 +137,7 @@ public class Decrypt {
         }
     }
 
-	private void attemptDecryptByStrategy1() throws IOException {
+	public void attemptDecryptByStrategy1() {
 
 		boolean exists = new ClassPathResource("key.txt").exists();
 		if (!exists) {
@@ -222,5 +222,15 @@ public class Decrypt {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String convertIntArrayToCsvString(int[] array) {
+		StringBuilder builder = new StringBuilder();
+		for (int i : array) {
+			builder.append(i + ",");
+		}
+
+		// chop off last comma
+		return builder.delete(builder.length() - 1, builder.length()).toString();
 	}
 }

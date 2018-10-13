@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
-import org.nyu.decrypt.Decrypt;
+import org.nyu.service.Decrypt;
 import org.springframework.core.io.ClassPathResource;
 
 public class DecryptJunit {
