@@ -3,16 +3,18 @@ package org.nyu.controller;
 import org.nyu.dto.Ciphertext;
 import org.nyu.dto.Plaintext;
 import org.nyu.service.Decrypt;
+import org.nyu.service.Decryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@RestController
 public class PartOneController {
+
+    @Autowired
+    Decryptor decryptor;
 
     @Autowired
     Decrypt decrypt;
@@ -22,12 +24,14 @@ public class PartOneController {
     @RequestMapping(value = "/api/partone/ciphertext", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> postCiphertext(@Valid @RequestBody Ciphertext ciphertext) {
-        String cipherContent = decrypt.convertIntArrayToCsvString(ciphertext.getCiphertext());
+
+        String cipherContent = decryptor.convertIntArrayToCsvString(ciphertext.getCiphertext());
 
         // a little sloppy but we can clean later ...
-        Decrypt myDecrypt = new Decrypt(cipherContent, STRATEGY);
+        String plaintext = decrypt.decrypt(cipherContent, STRATEGY);
         Plaintext myPlaintext = new Plaintext();
-        myPlaintext.setPlaintext(myDecrypt.toString());
+        myPlaintext.setPlaintext(plaintext);
+        System.out.println("plaintext: " + plaintext);
         return ResponseEntity.ok(myPlaintext);
     }
 }

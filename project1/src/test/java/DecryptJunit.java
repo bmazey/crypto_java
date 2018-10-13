@@ -25,8 +25,8 @@ public class DecryptJunit {
 			fr.close();
 
 			// String ciphertext = sc.next();
-			Decrypt decrypt = new Decrypt(ciphertext, "1");
-			decrypt.toString();
+			//Decrypt decrypt = new Decrypt(ciphertext, "1");
+			//decrypt.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,8 +51,8 @@ public class DecryptJunit {
 			fr.close();
 
 			// String ciphertext = sc.next();
-			Decrypt decrypt = new Decrypt(ciphertext, "2");
-			decrypt.toString();
+			//Decrypt decrypt = new Decrypt(ciphertext, "2");
+			//decrypt.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

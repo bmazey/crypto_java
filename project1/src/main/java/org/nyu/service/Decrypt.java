@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class Decrypt {
 
@@ -25,8 +24,9 @@ public class Decrypt {
 	private ArrayList<String> listOfWords;
 	private HashMap<Integer, String> keyMapping;
 	private boolean complete;
+	private String plaintext;
 
-	public Decrypt(String ciphertext, String strategy) {
+	public String decrypt(String ciphertext, String strategy) {
 
 		this.complete = true;
 		this.ciphertext = ciphertext;
@@ -69,7 +69,8 @@ public class Decrypt {
 			}
 
 			System.out.println(ciphertext);
-			attemptDecryptByStrategy1();
+			String temp = attemptDecryptByStrategy1();
+			return temp;
 
 		} else if ( strategy.equalsIgnoreCase("2")) {
 			try {
@@ -84,6 +85,8 @@ public class Decrypt {
 			System.out.print("Erroneous input!!");
 		}
 
+		// eeeekkkk ....
+		return "-1";
 	}
 
 	private void string_Deduced_Data() {
@@ -137,20 +140,23 @@ public class Decrypt {
         }
     }
 
-	public void attemptDecryptByStrategy1() {
+	public String attemptDecryptByStrategy1() {
 
+		String message_return = null;
+		StringBuilder message_decrypted = new StringBuilder();
 		boolean exists = new ClassPathResource("key.txt").exists();
 		if (!exists) {
 			Strategy strategy = new Strategy(this.ciphertext, 0, 105, this.candidates);
 			strategy.run();
 			int index = strategy.getIndexOfMessage();
 			System.out.println("The message is-------");
-			StringBuilder message_decrypted = new StringBuilder();
+
 			String[] arr = candidates.getCandidates()[index].split(",");
 			for (String s : arr) {
 				message_decrypted.append(s);
 			}
-			System.out.println(message_decrypted.toString());
+			message_return = message_decrypted.toString();
+			//System.out.println(message_decrypted.toString());
 			mapKey(message_decrypted.toString(), candidates.getCandidates()[index]);
 		} else {
 			StringBuilder part_key = new StringBuilder();
@@ -169,6 +175,7 @@ public class Decrypt {
 				System.out.println(match_of_key);
 			}
 		}
+		return message_return;
 	}
 
 	private void mapKey(String message, String message_comma_seperated) {
@@ -205,7 +212,7 @@ public class Decrypt {
 					System.out.println("Key set incomplete by " + (106 - keyMapping.keySet().size()));
 				}
 				keyMap.setKeyList(keyList);
-				FileWriter fw = new FileWriter(file);
+				FileWriter fw = new FileWriter("key.txt");
 				for (Key key : keyList) {
 					StringBuilder temp = new StringBuilder(key.getLetter());
 					for (int val : key.getArray()) {
@@ -224,13 +231,7 @@ public class Decrypt {
 		}
 	}
 
-	public String convertIntArrayToCsvString(int[] array) {
-		StringBuilder builder = new StringBuilder();
-		for (int i : array) {
-			builder.append(i + ",");
-		}
-
-		// chop off last comma
-		return builder.delete(builder.length() - 1, builder.length()).toString();
+	public String getPlaintext() {
+		return plaintext;
 	}
 }
