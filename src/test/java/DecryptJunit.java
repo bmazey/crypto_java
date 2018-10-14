@@ -11,7 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 
 public class DecryptJunit {
 
-	@Test
+	//@Test
 	public void testLoadOfCandidatesForStrategy1() {
 
 		LocalTime start = LocalTime.now();
@@ -37,7 +37,7 @@ public class DecryptJunit {
 				+ ChronoUnit.MILLIS.between(start, end));
 	}
 
-	@Test
+	//@Test
 	public void testLoadOfCandidatesForStrategy2() {
 
 		LocalTime start = LocalTime.now();

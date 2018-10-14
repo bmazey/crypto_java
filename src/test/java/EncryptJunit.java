@@ -8,7 +8,7 @@ import org.nyu.encrypt.Encrypt;
 
 public class EncryptJunit {
 
-	@Test
+	//@Test
 	public void encryptmessage() {
 
 		System.out.println("Enter the message");
