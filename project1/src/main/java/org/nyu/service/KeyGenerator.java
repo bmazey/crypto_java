@@ -24,7 +24,7 @@ public class KeyGenerator {
     final int KEYSPACE = 106;
 
     public HashMap<String, ArrayList<Integer>> getKey() {
-        if (key == null) key = generateKey();
+        if (key == null) { key = generateKey(); }
         return key;
     }
 

@@ -1,0 +1,111 @@
+[
+	{
+		"letter": "space",
+		"frequency": 19
+	},
+	{
+		"letter": "a",
+		"frequency": 7
+	},
+	{
+		"letter": "b",
+		"frequency": 1
+	},
+	{
+		"letter": "c",
+		"frequency": 2
+	},
+	{
+		"letter": "d",
+		"frequency": 4
+	},
+	{
+		"letter": "e",
+		"frequency": 10
+	},
+	{
+		"letter": "f",
+		"frequency": 2
+	},
+	{
+		"letter": "g",
+		"frequency": 2
+	},
+	{
+		"letter": "h",
+		"frequency": 5
+	},
+	{
+		"letter": "i",
+		"frequency": 6
+	},
+	{
+		"letter": "j",
+		"frequency": 1
+	},
+	{
+		"letter": "k",
+		"frequency": 1
+	},
+	{
+		"letter": "l",
+		"frequency": 3
+	},
+	{
+		"letter": "m",
+		"frequency": 2
+	},
+	{
+		"letter": "n",
+		"frequency": 6
+	},
+	{
+		"letter": "o",
+		"frequency": 6
+	},
+	{
+		"letter": "p",
+		"frequency": 2
+	},
+	{
+		"letter": "q",
+		"frequency": 1
+	},
+	{
+		"letter": "r",
+		"frequency": 5
+	},
+	{
+		"letter": "s",
+		"frequency": 5
+	},
+	{
+		"letter": "t",
+		"frequency": 7
+	},
+	{
+		"letter": "u",
+		"frequency": 2
+	},
+	{
+		"letter": "v",
+		"frequency": 1
+	},
+	{
+		"letter": "w",
+		"frequency": 2
+	},
+	{
+		"letter": "x",
+		"frequency": 1
+	},
+	{
+		"letter": "y",
+		"frequency": 2
+	},
+	{
+		"letter": "z",
+		"frequency": 1
+	}
+]
+  

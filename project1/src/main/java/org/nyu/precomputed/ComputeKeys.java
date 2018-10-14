@@ -19,7 +19,7 @@ public class ComputeKeys {
 	private HashSet<String> dictionary;
 	
 	/**
-	 * Junit -> com.junits.PreComputed
+	 * Junit -> java.PreComputed
 	 * 
 	 * This function reads the frequency of the key mapping
 	 */

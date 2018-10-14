@@ -27,4 +27,14 @@ public class Decryptor {
 
         return plaintext.toString();
     }
+
+    public String convertIntArrayToCsvString(int[] array) {
+        StringBuilder builder = new StringBuilder();
+        for (int i : array) {
+            builder.append(i + ",");
+        }
+
+        // chop off last comma
+        return builder.delete(builder.length() - 1, builder.length()).toString();
+    }
 }

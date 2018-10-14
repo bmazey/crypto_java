@@ -35,8 +35,5 @@ public class EncryptJunit {
 		for (String val: frequency_maps.keySet()) {
 			System.out.println(val + "--->" + frequency_maps.get(val));
 		}
-	
 	}
-	
-	
 }
