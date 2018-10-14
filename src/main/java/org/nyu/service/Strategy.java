@@ -76,56 +76,100 @@ public class Strategy {
 
 	public void runStrategy2() {
 
-	    try{
-            ObjectMapper mapper = new ObjectMapper();
-            // read JSON file to prepare the key map
-            this.dictionary = mapper.readValue(new ClassPathResource("dictionary.json").getInputStream(), Dictionary.class);
-            Frequency[] frequencies = mapper.readValue(new ClassPathResource("frequency2.json").getInputStream(), Frequency[].class);
-            this.frequencies = new HashMap<String,Integer>();
-            this.occurences = new HashMap<String,Integer>();
-            for (Frequency temp : frequencies) {
-                this.frequencies.put(temp.getLetter(), temp.getFrequency());
-                this.occurences.put(temp.getLetter(), 0);
-            }
-            frequencies = null;
-            HashMap<String, String> conjectureMap = new HashMap<String, String>();
-            for (String word : this.dictionary.getWords()) {
-                String[] copy_cipher_comma = new String[500];
-                copy_cipher_comma = Arrays.copyOf(this.cipher_split, this.cipher_split.length);
-                this.temp_decrypt_string = new StringBuilder();
-                if (!runBackTrack(conjectureMap, copy_cipher_comma, word, 0)){
-                    System.out.print(".");
-                    conjectureMap = new HashMap<String, String>();
-                    for (String key : this.occurences.keySet()) {
-                        this.occurences.put(key, 0);
-                    }
-                }
-                else {
-                    String[] split = partly_decrypt_string;
-                    this.temp_decrypt_string = new StringBuilder();
-                    for (int i = 0; i < partly_decrypt_string.length; i++) {
-                        if (conjectureMap.containsKey(split[i])) {
-                            this.temp_decrypt_string.append(conjectureMap.get(split[i]));
-                        } else {
-                            this.temp_decrypt_string.append(split[i]);
-                        }
-                    }
-                    System.out.println(this.temp_decrypt_string.toString());
-                    /*for (String value : conjectureMap.values()) {
-                        int count = 0;
-                        for (String key : conjectureMap.keySet()) {
-                            if (conjectureMap.get(key).equalsIgnoreCase(value)) {
-                                count++;
-                            }
-                        }
-                        System.out.println(value + " : " + count);
-                    }*/
-                    break;
-                }
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
+		try{
+			ObjectMapper mapper = new ObjectMapper();
+			// read JSON file to prepare the key map
+			this.dictionary = mapper.readValue(new ClassPathResource("dictionary.json").getInputStream(), Dictionary.class);
+			Frequency[] frequencies = mapper.readValue(new ClassPathResource("frequency2.json").getInputStream(), Frequency[].class);
+			this.frequencies = new HashMap<String,Integer>();
+			this.occurences = new HashMap<String,Integer>();
+			for (Frequency temp : frequencies) {
+				this.frequencies.put(temp.getLetter(), temp.getFrequency());
+				this.occurences.put(temp.getLetter(), 0);
+			}
+			frequencies = null;
+			HashMap<String, String> conjectureMap = new HashMap<String, String>();
+			for (String word : this.dictionary.getWords()) {
+				String[] copy_cipher_comma = new String[500];
+				copy_cipher_comma = Arrays.copyOf(this.cipher_split, this.cipher_split.length);
+				this.temp_decrypt_string = new StringBuilder();
+				if (!runBackTrack(conjectureMap, copy_cipher_comma, word, 0)){
+					System.out.print(".");
+					conjectureMap = new HashMap<String, String>();
+					for (String key : this.occurences.keySet()) {
+						this.occurences.put(key, 0);
+					}
+				}
+				else {
+					String[] split = partly_decrypt_string;
+					this.temp_decrypt_string = new StringBuilder();
+					for (int i = 0; i < partly_decrypt_string.length; i++) {
+						if (conjectureMap.containsKey(split[i])) {
+							this.temp_decrypt_string.append(conjectureMap.get(split[i]));
+							split[i] = conjectureMap.get(split[i]);
+						} else {
+							this.temp_decrypt_string.append(split[i]);
+						}
+					}
+					String regex = "\\d+";
+					System.out.println("Partly Decrypted Key: ");
+					System.out.println(temp_decrypt_string);
+					int count_num = 0;
+					boolean hasNumber = false;
+					int count = 0;
+					for (int i = 0;i< partly_decrypt_string.length;i++) {
+						if ( split[i].matches(regex) ) {
+							hasNumber = true;
+							count_num++;
+						}
+						if ( split[i].equalsIgnoreCase(" ")) {
+							if (hasNumber && count_num == 1) {
+								String[] temp = new String[i - count];
+								int arr_count = 0;
+								for (int loop = count; loop < i; loop++) {
+									temp[arr_count++] = split[loop];
+								}
+								String matched_word[] = this.dictionary.checkForWord(temp);
+								if ( null != matched_word) {
+									String num_to_be_updated = null;
+									int count_word = 0;
+									for (int loop = count; loop < i; loop++) {
+										if (split[loop].matches(regex)){
+											num_to_be_updated = split[count];
+											conjectureMap.put(split[count], matched_word[count_word]);
+										}
+										split[count] = matched_word[count_word++];
+										count++;
+									}
+									for (int loop = count; loop < split.length - 1; loop++) {
+										if (split[loop].equalsIgnoreCase(num_to_be_updated)) {
+											split[loop] = conjectureMap.get(num_to_be_updated);
+										}
+									}
+								}
+							}
+							hasNumber = false;
+							count_num = 0;
+							count = i + 1;
+						}
+					}
+					System.out.println("============================");
+					this.temp_decrypt_string = new StringBuilder();
+					for (int i = 0; i < partly_decrypt_string.length; i++) {
+						if (conjectureMap.containsKey(split[i])) {
+							this.temp_decrypt_string.append(conjectureMap.get(split[i]));
+							split[i] = conjectureMap.get(split[i]);
+						} else {
+							this.temp_decrypt_string.append(split[i]);
+						}
+					}
+					System.out.println(this.temp_decrypt_string);
+					break;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private boolean runBackTrack(HashMap<String, String> map, String[] copy_cipher_comma, String word, int current) {
