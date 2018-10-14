@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
-import org.nyu.decrypt.Decrypt;
+import org.nyu.service.Decrypt;
 import org.springframework.core.io.ClassPathResource;
 
 public class DecryptJunit {
@@ -25,8 +25,8 @@ public class DecryptJunit {
 			fr.close();
 
 			// String ciphertext = sc.next();
-			Decrypt decrypt = new Decrypt(ciphertext, "1");
-			decrypt.toString();
+			//Decrypt decrypt = new Decrypt(ciphertext, "1");
+			//decrypt.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,8 +51,8 @@ public class DecryptJunit {
 			fr.close();
 
 			// String ciphertext = sc.next();
-			Decrypt decrypt = new Decrypt(ciphertext, "2");
-			decrypt.toString();
+			//Decrypt decrypt = new Decrypt(ciphertext, "2");
+			//decrypt.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

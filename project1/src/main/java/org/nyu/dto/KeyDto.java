@@ -1,6 +1,6 @@
 package org.nyu.dto;
 
-public class KeyPojo {
+public class KeyDto {
 
     /**
      * This class represents a key POJO
