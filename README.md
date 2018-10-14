@@ -26,7 +26,9 @@ The controller accepts a ciphertext JSON and returns the decrypted plaintext.
     POST http://crypto-project.us-east-2.elasticbeanstalk.com/api/partone/ciphertext
         {
           "ciphertext": [
-            0
+            1,
+            2,
+            3
           ]
         }
 
