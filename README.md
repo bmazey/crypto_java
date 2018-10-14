@@ -44,3 +44,27 @@ Response
 
 <h2>Part Two</h2>
 
+For the second part of the assignment we'll be using the part two controller found here: http://crypto-project.us-east-2.elasticbeanstalk.com/swagger-ui.html#!/part45two45controller/postCiphertextUsingPOST_1
+
+The controller accepts a ciphertext JSON and returns the decrypted plaintext.
+
+Request
+
+    POST http://crypto-project.us-east-2.elasticbeanstalk.com/api/parttwo/ciphertext
+        {
+          "ciphertext": [
+            81,
+            82,
+            83
+          ]
+        }
+
+Response
+
+    HTTP 200
+    {
+      "plaintext": "sampling jeopardous stovepipes harmony ... "
+    }
+
+
+Please direct any issues or questions to b.mazey@nyu.edu / sb6856@nyu.edu / fvl209@nyu.edu
