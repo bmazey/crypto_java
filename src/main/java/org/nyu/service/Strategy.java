@@ -79,8 +79,8 @@ public class Strategy {
 	    try{
             ObjectMapper mapper = new ObjectMapper();
             // read JSON file to prepare the key map
-            this.dictionary = mapper.readValue(new ClassPathResource("dictionary.json").getFile(), Dictionary.class);
-            Frequency[] frequencies = mapper.readValue(new ClassPathResource("frequency2.json").getFile(), Frequency[].class);
+            this.dictionary = mapper.readValue(new ClassPathResource("dictionary.json").getInputStream(), Dictionary.class);
+            Frequency[] frequencies = mapper.readValue(new ClassPathResource("frequency2.json").getInputStream(), Frequency[].class);
             this.frequencies = new HashMap<String,Integer>();
             this.occurences = new HashMap<String,Integer>();
             for (Frequency temp : frequencies) {
