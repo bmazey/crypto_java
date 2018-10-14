@@ -23,15 +23,12 @@ For the first part of the assignment we'll be using the part one controller foun
 
 The controller accepts a ciphertext JSON and returns the decrypted plaintext.
 
-<code>
-
-{
-  "ciphertext": [
-    0
-  ]
-}
-
-</code>
+    POST http://crypto-project.us-east-2.elasticbeanstalk.com/api/partone/ciphertext
+        {
+          "ciphertext": [
+            0
+          ]
+        }
 
 <h2>Part Two</h2>
 
