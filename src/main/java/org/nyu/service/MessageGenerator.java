@@ -31,4 +31,21 @@ public class MessageGenerator {
         return messageBuilder.subSequence(0, 500).toString();
     }
 
+    public String generateSubsetMessage() {
+        r = new Random();
+        StringBuilder messageBuilder = new StringBuilder();
+        Dictionary dictionary = dictionaryGenerator.generateDictionary();
+
+        // here we assert the first word comes from the first ten entries in the dictionary
+        messageBuilder.append(dictionary.getWords()[10]);
+        messageBuilder.append(" ");
+
+        while(messageBuilder.length() < 500) {
+            messageBuilder.append(dictionary.getWords()[r.nextInt(dictionary.getWords().length)]);
+            messageBuilder.append(" ");
+        }
+
+        return messageBuilder.subSequence(0, 500).toString();
+    }
+
 }
