@@ -6,12 +6,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 
 @Service
 public class FrequencyGenerator {
 
-    private File frequencyFile;
+    private InputStream frequencyStream;
     private ObjectMapper mapper;
 
 
@@ -19,10 +20,10 @@ public class FrequencyGenerator {
         mapper = new ObjectMapper();
         HashMap<String, Integer> frequency = new HashMap<>();
         try {
-            frequencyFile  = new ClassPathResource("frequency.json").getFile();
+            frequencyStream  = new ClassPathResource("frequency.json").getInputStream();
 
             // see if this warning can be fixed ...
-            frequency = mapper.readValue(frequencyFile, HashMap.class);
+            frequency = mapper.readValue(frequencyStream, HashMap.class);
 
         } catch (Exception e) {
             e.printStackTrace();
