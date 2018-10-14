@@ -78,18 +78,21 @@ public class PartOneTest {
         HashMap<String, ArrayList<Integer>> key = deserialzeKey();
 
         // now we'll draft a random candidate ...
-        String candidate = candidates.getCandidates()[r.nextInt(candidates.getCandidates().length)];
+        for (int loop = 0; loop< 10; loop++) {
+            String candidate = candidates.getCandidates()[r.nextInt(candidates.getCandidates().length)];
 
-        int[] ciphertext = encryptor.encrypt(key, candidate);
+            int[] ciphertext = encryptor.encrypt(key, candidate);
 
-        for (String keys : key.keySet()) {
-            System.out.println(keys + " : " + Arrays.toString(key.get(keys).toArray()));
+            /*for (String keys : key.keySet()) {
+                System.out.println(keys + " : " + Arrays.toString(key.get(keys).toArray()));
+            }*/
+            System.out.println("=======================");
+            System.out.println("plaintext: " + candidate);
+            System.out.println("ciphertext: " + Arrays.toString(ciphertext));
+
+            //TODO - do something with it! Merging dev -> master ...
         }
 
-        System.out.println("plaintext: " + candidate);
-        System.out.println("ciphertext: " + Arrays.toString(ciphertext));
-
-        //TODO - do something with it! Merging dev -> master ...
 
     }
 

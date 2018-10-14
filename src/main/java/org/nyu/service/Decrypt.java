@@ -77,7 +77,8 @@ public class Decrypt {
 				InputStream stream = new ClassPathResource("dictionary.json").getInputStream();
 				this.dictionary = mapper.readValue(stream, Dictionary.class);
 				this.listOfWords = new ArrayList<String>(Arrays.asList(dictionary.getWords()));
-				attemptDecryptByStrategy2();
+				String temp = attemptDecryptByStrategy2();
+				return temp;
 			} catch(Exception e) {
                 e.printStackTrace();
 			}
@@ -110,7 +111,7 @@ public class Decrypt {
 		 */
 	}
 
-	private void attemptDecryptByStrategy2() {
+	private String attemptDecryptByStrategy2() {
 
 	    try {
 	        /*boolean bb_presence = false;
@@ -132,12 +133,14 @@ public class Decrypt {
             if (!exists) {
                 Strategy strategy = new Strategy(this.ciphertext);
                 strategy.runStrategy2();
+                return strategy.getTemp_decrypt_string().toString();
             } else {
                 System.out.println("Key is present");
             }
         } catch(Exception e) {
 	        e.printStackTrace();
         }
+		return "";
     }
 
 	public String attemptDecryptByStrategy1() {
