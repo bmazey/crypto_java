@@ -15,4 +15,23 @@
 
 <h1>Project One</h1>
 
-You can find our project running here: [http://crypto-project.us-east-2.elasticbeanstalk.com/swagger-ui.html#/]
+You can find our project running here: http://crypto-project.us-east-2.elasticbeanstalk.com/swagger-ui.html#/
+
+<h2>Part One</h2>
+
+For the first part of the assignment we'll be using the part one controller found here: http://crypto-project.us-east-2.elasticbeanstalk.com/swagger-ui.html#!/part45one45controller/postCiphertextUsingPOST
+
+The controller accepts a ciphertext JSON and returns the decrypted plaintext.
+
+<code>
+
+{
+  "ciphertext": [
+    0
+  ]
+}
+
+</code>
+
+<h2>Part Two</h2>
+
