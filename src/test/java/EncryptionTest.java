@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class EncryptionTest {
 
-    @Test
+    //@Test
     public void encrypt() {
 
         String message = "dipped ligatured cannier cohabitation cuddling coiffeuses pursuance roper eternizes nullo " +
