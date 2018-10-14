@@ -1,7 +1,7 @@
 package org.nyu.dto;
 
 
-public class FrequencyPojo {
+public class FrequencyDto {
 
     /**
      * This class represents frequency POJO

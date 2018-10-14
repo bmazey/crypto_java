@@ -37,7 +37,7 @@ public class Decrypt {
 		if (new ClassPathResource("key.txt").exists()) {
 			this.keyMap.createKeyList();
 			try {
-				BufferedReader br = new BufferedReader(new FileReader(new ClassPathResource("key.txt").getFile()));
+				BufferedReader br = new BufferedReader(new InputStreamReader(new ClassPathResource("key.txt").getInputStream()));
 				String line = br.readLine();
 				while (null != line) {
 					String[] splits = line.split(",");
@@ -61,8 +61,8 @@ public class Decrypt {
 		}
 		if (strategy.equalsIgnoreCase("1")) {
 			try {
-				File file = new ClassPathResource("candidates.json").getFile();
-				this.candidates = mapper.readValue(file, Candidates.class);
+				InputStream stream = new ClassPathResource("candidates.json").getInputStream();
+				this.candidates = mapper.readValue(stream, Candidates.class);
 				this.candidates.modifyCandidates();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -74,8 +74,8 @@ public class Decrypt {
 
 		} else if ( strategy.equalsIgnoreCase("2")) {
 			try {
-				File file = new ClassPathResource("dictionary.json").getFile();
-				this.dictionary = mapper.readValue(file, Dictionary.class);
+				InputStream stream = new ClassPathResource("dictionary.json").getInputStream();
+				this.dictionary = mapper.readValue(stream, Dictionary.class);
 				this.listOfWords = new ArrayList<String>(Arrays.asList(dictionary.getWords()));
 				attemptDecryptByStrategy2();
 			} catch(Exception e) {
@@ -183,6 +183,9 @@ public class Decrypt {
 		try {
 			boolean exists = new ClassPathResource("key.txt").exists();
 			if (!exists) {
+
+				// TODO - we will replace this ...
+
 				File file = new File("src/main/resources/key.txt");
 				Key[] keyList = keyMap.getKeyList();
 				HashMap<String, Integer> map = keyMap.getFrequencyMap();
