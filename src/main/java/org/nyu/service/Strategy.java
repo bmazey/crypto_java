@@ -191,6 +191,10 @@ public class Strategy {
         }
     }
 
+	public StringBuilder getTemp_decrypt_string() {
+		return temp_decrypt_string;
+	}
+
 	public synchronized void setResult() {
 		found = true;
 	}
